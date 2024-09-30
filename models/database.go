@@ -34,10 +34,17 @@ func Db_connection() {
 		panic("failed to connect database")
 	}
 
-	var errMigration = Db.AutoMigrate(&(User{}))
-	errMigration = Db.AutoMigrate(&(Book{}))
+	errMigration1 := Db.AutoMigrate(&(UserRole{}))
+	errMigration2 := Db.AutoMigrate(&(User{}))
+	errMigration3 := Db.AutoMigrate(&(Book{}))
 
-	if errMigration != nil {
-		log.Fatalln(errMigration)
+	if errMigration1 != nil {
+		fmt.Println("errMigration1 = ", errMigration1)
+	}
+	if errMigration2 != nil {
+		fmt.Println("errMigration2 = ", errMigration2)
+	}
+	if errMigration3 != nil {
+		fmt.Println("errMigration3 = ", errMigration3)
 	}
 }
