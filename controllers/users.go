@@ -24,7 +24,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 	var user = []models.User{
 		{
-			UserRoleId: r.Form["urole_id"][0],
+			UserRoleID: r.Form["urole_id"][0],
 			Name: r.Form["name"][0],
 			Email: r.Form["email"][0],
 			Password: hashedPwd,
