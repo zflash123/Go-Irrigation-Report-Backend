@@ -12,7 +12,7 @@ type UserRole struct {
 
 type User struct {
 	ID					uint					 `gorm:"primarykey"`
-	UserRoleId 	string
+	UserRoleID 	string
 	Name				string
 	Email				string
 	Password		string
@@ -23,6 +23,7 @@ type User struct {
 	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
 	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
 	DeletedAt 	gorm.DeletedAt `gorm:"index"`
+	UserRole		UserRole
 }
 
 type Book struct {
