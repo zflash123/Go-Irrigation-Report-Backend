@@ -15,17 +15,12 @@ import (
 func Routes() {
 	models.Db_connection()
 	r := mux.NewRouter()
-	//users
+	//basic
 	r.HandleFunc("/register", controllers.Register).Methods("POST")
 	r.HandleFunc("/login", controllers.Login).Methods("POST")
-	//books
-	books := r.PathPrefix("/books").Subrouter()
-	books.Use(middleware.VerifyJwtToken)
-	books.HandleFunc("", controllers.GetAllBooks).Methods("GET")
-	books.HandleFunc("/{id}", controllers.GetBookById).Methods("GET")
-	books.HandleFunc("", controllers.AddBook).Methods("POST")
-	books.HandleFunc("/{id}", controllers.UpdateBookById).Methods("PUT")
-	books.HandleFunc("/{id}", controllers.DeleteBookById).Methods("DELETE")
+	//routes for normal users
+	user := r.PathPrefix("/api/user").Subrouter()
+	user.Use(middleware.VerifyJwtToken)
 
 	handler := cors.Default().Handler(r)
 	log.Fatal(http.ListenAndServe(":8080", handler))
