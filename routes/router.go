@@ -21,6 +21,7 @@ func Routes() {
 	//routes for normal users
 	user := r.PathPrefix("/api/user").Subrouter()
 	user.Use(middleware.VerifyJwtToken)
+	user.HandleFunc("/close-segments", controllers.GetCloseSegments).Methods("GET")
 
 	handler := cors.Default().Handler(r)
 	log.Fatal(http.ListenAndServe(":8080", handler))
