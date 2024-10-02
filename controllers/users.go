@@ -18,6 +18,7 @@ func hashPassword(password string) (string, error) {
 }
 
 func Register(w http.ResponseWriter, r *http.Request) {
+	var res Response
 	w.WriteHeader(http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 	r.ParseForm()
