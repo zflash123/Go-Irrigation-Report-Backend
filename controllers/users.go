@@ -9,6 +9,9 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+type Response struct{
+	Message				string
+}
 func hashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 	return string(bytes), err
