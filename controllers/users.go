@@ -39,7 +39,9 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 	createUser := models.Db.Create(&user[0])
 	if(createUser.Error != nil) {
+		w.WriteHeader(http.StatusInternalServerError)
 	} else{
+		w.WriteHeader(http.StatusOK)
 	}
 }
 
