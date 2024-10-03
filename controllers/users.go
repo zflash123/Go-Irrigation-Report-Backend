@@ -84,5 +84,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		res.Auth = "Not generated"
 		
 		err := json.NewEncoder(w).Encode(res)
+		if err != nil {
+			log.Println(err)
+		}
 	}
 }
