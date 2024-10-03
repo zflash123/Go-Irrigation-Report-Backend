@@ -71,7 +71,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		strJwt := CreateJwt(users[0].Email, users[0].FirstName)
 		res.Auth = strJwt
 
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusOK)
 
 		err := json.NewEncoder(w).Encode(res)
