@@ -43,6 +43,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		res.Message = "There is an error when registering your account"
 	} else{
 		w.WriteHeader(http.StatusOK)
+		res.Message = "Your account successfully registered"
 	}
 }
 
