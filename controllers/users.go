@@ -38,7 +38,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 	createUser := models.Db.Create(&user[0])
-	fmt.Fprint(w, "Your account successfully registered")
+	
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
