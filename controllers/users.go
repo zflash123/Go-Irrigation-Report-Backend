@@ -79,5 +79,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 		}
 	} else {
+		w.WriteHeader(http.StatusUnauthorized)
 	}
 }
