@@ -40,6 +40,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	createUser := models.Db.Create(&user[0])
 	if(createUser.Error != nil) {
 		w.WriteHeader(http.StatusInternalServerError)
+		res.Message = "There is an error when registering your account"
 	} else{
 		w.WriteHeader(http.StatusOK)
 	}
