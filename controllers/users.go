@@ -37,7 +37,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 			Avatar: r.Form["avatar"][0],
 		},
 	}
-	models.Db.Create(&user[0])
+	createUser := models.Db.Create(&user[0])
 	fmt.Fprint(w, "Your account successfully registered")
 }
 
