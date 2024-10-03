@@ -45,6 +45,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	} else{
 		w.WriteHeader(http.StatusOK)
 		res.Message = "Your account successfully registered"
+		err := json.NewEncoder(w).Encode(res)
 	}
 }
 
