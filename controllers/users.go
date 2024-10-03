@@ -20,7 +20,7 @@ func hashPassword(password string) (string, error) {
 func Register(w http.ResponseWriter, r *http.Request) {
 	var res Response
 	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	r.ParseForm()
 	hashedPwd, err := hashPassword(r.Form["password"][0])
 	if(err!=nil){
@@ -68,7 +68,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	if emailCheckErr == nil && isPwdCorrect {
 		var res Response
 		res.Message = "Your account successfully logged in"
-		strJwt := CreateJwt(users[0].Email, users[0].Name)
+		strJwt := CreateJwt(users[0].Email, users[0].FirstName)
 		res.Auth = strJwt
 
 		w.Header().Set("Content-Type", "application/json")
@@ -76,7 +76,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 		err := json.NewEncoder(w).Encode(res)
 		if err != nil {
-			log.Fatalln(err)
+			log.Println(err)
 		}
 	} else {
 		fmt.Fprint(w, "Email or password that you're inputted is wrong")
