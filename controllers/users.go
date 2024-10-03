@@ -66,8 +66,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Auth string `json:"auth_token"`
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	var res Response
 	if emailCheckErr == nil && isPwdCorrect {
-		var res Response
 		res.Message = "Your account successfully logged in"
 		strJwt := CreateJwt(users[0].Email, users[0].FirstName)
 		res.Auth = strJwt
