@@ -80,5 +80,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		w.WriteHeader(http.StatusUnauthorized)
+		res.Message = "The email or password that you inputted is wrong"
 	}
 }
