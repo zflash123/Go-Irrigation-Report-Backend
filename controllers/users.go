@@ -42,6 +42,9 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		res.Message = "There is an error when registering your account"
 		err := json.NewEncoder(w).Encode(res)
+		if(err!=nil){
+			fmt.Println(err)
+		}
 	} else{
 		w.WriteHeader(http.StatusOK)
 		res.Message = "Your account successfully registered"
