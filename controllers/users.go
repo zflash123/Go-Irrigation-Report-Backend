@@ -79,6 +79,5 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 		}
 	} else {
-		fmt.Fprint(w, "Email or password that you're inputted is wrong")
 	}
 }
