@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"encoding/json"
 	"go-irrigation-report-api/models"
 	"github.com/google/uuid"
 )
