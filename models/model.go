@@ -29,6 +29,10 @@ type User struct {
 	UserRole		UserRole
 }
 
+func (User) TableName() string {
+	return "user.users"
+}
+
 type Book struct {
 	gorm.Model
 	Name		string
