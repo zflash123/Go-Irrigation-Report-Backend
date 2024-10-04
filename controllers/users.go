@@ -17,6 +17,14 @@ func hashPassword(password string) (string, error) {
 	return string(bytes), err
 }
 
+func isPasswordMatched(hashedPwd string, inputtedPwd string) bool{
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPwd), []byte(inputtedPwd))
+	if(err!=nil){
+		return false
+	}
+	return true
+}
+
 func Register(w http.ResponseWriter, r *http.Request) {
 	var res Response
 	w.WriteHeader(http.StatusOK)
