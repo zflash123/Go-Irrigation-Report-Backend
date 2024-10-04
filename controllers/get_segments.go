@@ -13,5 +13,5 @@ func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
 	latitude:= r.URL.Query().Get("lat")
 	longitude:= r.URL.Query().Get("long")
 
-
+	var closeSegments CloseSegments
 }
