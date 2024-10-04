@@ -7,7 +7,7 @@ import (
 )
 
 type UserRole struct {
-	ID					string				 `gorm:"primarykey"`
+	ID					uuid.UUID			 `gorm:"primarykey"`
 	Name				string
 }
 
