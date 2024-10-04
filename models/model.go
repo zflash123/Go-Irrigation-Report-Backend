@@ -12,7 +12,7 @@ type UserRole struct {
 }
 
 func (UserRole) TableName() string {
-	return "user.user_role"
+	return "user.user_roles"
 }
 
 type User struct {
