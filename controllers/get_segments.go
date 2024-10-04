@@ -30,4 +30,7 @@ func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
             distance;`, longitude, latitude, longitude, latitude).Scan(&closeSegments)
 
 	err:= json.NewEncoder(w).Encode(closeSegments)
+	if(err!=nil){
+		fmt.Printf("%v", err)
+	}
 }
