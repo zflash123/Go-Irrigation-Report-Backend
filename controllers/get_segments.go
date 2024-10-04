@@ -28,4 +28,6 @@ func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
             public.ST_Distance(geom, public.geography(public.ST_SetSRID(public.ST_MakePoint(?, ?), 4326)))<=100
         ORDER BY
             distance;`, longitude, latitude, longitude, latitude).Scan(&closeSegments)
+
+	err:= json.NewEncoder(w).Encode(closeSegments)
 }
