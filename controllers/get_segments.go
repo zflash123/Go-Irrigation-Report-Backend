@@ -15,4 +15,15 @@ func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
 	longitude:= r.URL.Query().Get("long")
 
 	var closeSegments []CloseSegments
+	models.Db.Raw(`SELECT
+            id,
+            name,
+            geojson,
+            public.ST_Distance(geom, public.geography(public.ST_SetSRID(public.ST_MakePoint(?, ?), 4326))) AS distance
+        FROM
+            map.irrigations_segment
+        WHERE
+            public.ST_Distance(geom, public.geography(public.ST_SetSRID(public.ST_MakePoint(?, ?), 4326)))<=100
+        ORDER BY
+            distance;`, longitude, latitude, longitude, latitude).Scan(&closeSegments)
 }
