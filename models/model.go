@@ -3,6 +3,7 @@ package models
 import (
 	"gorm.io/gorm"
 	"time"
+	"github.com/google/uuid"
 )
 
 type UserRole struct {
