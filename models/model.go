@@ -11,6 +11,10 @@ type UserRole struct {
 	Name				string
 }
 
+func (UserRole) TableName() string {
+	return "user.user_role"
+}
+
 type User struct {
 	ID					uuid.UUID			 `gorm:"type:uuid;default:gen_random_uuid()"`
 	UserRoleID 	string
