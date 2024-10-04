@@ -12,7 +12,7 @@ type UserRole struct {
 }
 
 type User struct {
-	ID					uuid.UUID			 `gorm:"primarykey"`
+	ID					uuid.UUID			 `gorm:"type:uuid;default:gen_random_uuid()"`
 	UserRoleID 	string
 	Email				string
 	Password		string
