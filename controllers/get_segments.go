@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 	"encoding/json"
+	"fmt"
 	"go-irrigation-report-api/models"
 	"github.com/google/uuid"
 )
