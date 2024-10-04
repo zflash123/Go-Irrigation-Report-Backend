@@ -68,7 +68,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	var users []models.User
 	userData := models.Db.Where("email = ?", r.Form["email"][0]).First(&users)
 	emailCheckErr := userData.Error
-	isPwdCorrect := users[0].Password==r.Form["password"][0]
+	isPwdCorrect := isPasswordMatched(users[0].Password, r.Form["password"][0])
 	type Response struct {
 		Message string `json:"message"`
 		Auth string `json:"auth_token"`
