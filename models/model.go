@@ -12,7 +12,7 @@ type UserRole struct {
 }
 
 type User struct {
-	ID					uint					 `gorm:"primarykey"`
+	ID					uuid.UUID			 `gorm:"primarykey"`
 	UserRoleID 	string
 	Email				string
 	Password		string
