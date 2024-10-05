@@ -10,7 +10,7 @@ import (
 type CloseSegments struct {
 	ID				uuid.UUID		`json:"id"`
 	Name			string			`json:"name"`
-	Geojson		string
+	Geojson		string			`json:"geojson"`
 }
 func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
 	latitude:= r.URL.Query().Get("lat")
