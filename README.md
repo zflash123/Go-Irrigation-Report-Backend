@@ -7,7 +7,7 @@ Golang is backend language made by Google.
 Golang is a fast language because when the Golang project has compiled, the output will be the binary that's native to the Operating System.
 
 ## About this project
-This is golang version of irrigation report API project.
+This is the golang backend for the irrigation report frontend that is written using React JS.
 
 ## How to run this code
 To run the project enter this command
