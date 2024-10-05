@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 type CloseSegments struct {
-	ID				uuid.UUID
+	ID				uuid.UUID		`json:"id"`
 	Name			string
 	Geojson		string
 }
