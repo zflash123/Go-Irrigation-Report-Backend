@@ -9,7 +9,7 @@ import (
 )
 type CloseSegments struct {
 	ID				uuid.UUID		`json:"id"`
-	Name			string
+	Name			string			`json:"name"`
 	Geojson		string
 }
 func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
