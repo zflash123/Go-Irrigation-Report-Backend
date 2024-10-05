@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
-	"go-irrigation-report-api/models"
+	"go-irrigation-report-backend/models"
 	"net/http"
 	"strconv"
 

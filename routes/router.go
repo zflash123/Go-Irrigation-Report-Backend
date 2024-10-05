@@ -1,12 +1,12 @@
 package routes
 
 import (
-	"go-irrigation-report-api/controllers"
-	"go-irrigation-report-api/models"
+	"go-irrigation-report-backend/controllers"
+	"go-irrigation-report-backend/models"
 	"log"
 	"net/http"
 
-	"go-irrigation-report-api/middleware"
+	"go-irrigation-report-backend/middleware"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"go-irrigation-report-api/routes"
+	"go-irrigation-report-backend/routes"
 )
 
 func runServer() {
