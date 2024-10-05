@@ -38,13 +38,13 @@ func Db_connection() {
 	errMigration2 := Db.AutoMigrate(&(User{}))
 	errMigration3 := Db.AutoMigrate(&(Book{}))
 
-	if errMigration1 != nil {
-		fmt.Println("errMigration1 = ", errMigration1)
-	}
-	if errMigration2 != nil {
-		fmt.Println("errMigration2 = ", errMigration2)
-	}
-	if errMigration3 != nil {
-		fmt.Println("errMigration3 = ", errMigration3)
-	}
+	// if errMigration1 != nil {
+	// 	fmt.Println("errMigration1 = ", errMigration1)
+	// }
+	// if errMigration2 != nil {
+	// 	fmt.Println("errMigration2 = ", errMigration2)
+	// }
+	// if errMigration3 != nil {
+	// 	fmt.Println("errMigration3 = ", errMigration3)
+	// }
 }
