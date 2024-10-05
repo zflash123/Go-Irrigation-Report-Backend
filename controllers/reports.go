@@ -4,6 +4,6 @@ import(
 	"net/http"
 )
 
-func GetReportById(){
+func GetReportById(w http.ResponseWriter, r *http.Request){
 	
 }
