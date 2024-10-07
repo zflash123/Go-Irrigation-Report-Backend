@@ -13,6 +13,7 @@ type Reports struct {
 	Id									string
 	CreatedAt						string
 	DoneAt							string
+	Level								string
 }
 
 func GetReportById(w http.ResponseWriter, r *http.Request){
