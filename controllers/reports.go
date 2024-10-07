@@ -1,6 +1,7 @@
 package controllers
 
 import(
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"go-irrigation-report-backend/models"
