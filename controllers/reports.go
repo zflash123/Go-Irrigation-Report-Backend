@@ -14,4 +14,8 @@ type Reports struct {
 func GetReportById(w http.ResponseWriter, r *http.Request){
 	report_id := mux.Vars(r)["id"]
 	var reports []Reports
+	queryReports:= models.Db.Table("report.report_list").
+	Select("report.report_list.id").
+	Scan(&reports)
+
 }
