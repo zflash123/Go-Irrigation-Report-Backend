@@ -18,7 +18,7 @@ func GetReportById(w http.ResponseWriter, r *http.Request){
 	var reports []Reports
 	queryReports:= models.Db.Table("report.report_list").
 	Select("report.report_list.id", "report.report_list.created_at", "report.report_list.done_at").
-	Scan(&reports)
+	Where("report.report_list.id = ?", report_id).Scan(&reports)
 
 	if queryReports.Error != nil {
 		fmt.Printf("%v", queryReports.Error)
