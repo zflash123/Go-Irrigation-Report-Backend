@@ -12,5 +12,5 @@ type Reports struct {
 }
 
 func GetReportById(w http.ResponseWriter, r *http.Request){
-	
+	report_id := mux.Vars(r)["id"]
 }
