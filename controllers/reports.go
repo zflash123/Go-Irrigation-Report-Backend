@@ -6,6 +6,7 @@ import(
 )
 
 type Reports struct {
+	Id									string
 }
 
 func GetReportById(w http.ResponseWriter, r *http.Request){
