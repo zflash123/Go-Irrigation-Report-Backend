@@ -10,6 +10,7 @@ import(
 type Reports struct {
 	Id									string
 	CreatedAt						string
+	DoneAt							string
 }
 
 func GetReportById(w http.ResponseWriter, r *http.Request){
