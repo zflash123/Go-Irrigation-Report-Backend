@@ -1,6 +1,7 @@
 package controllers
 
 import(
+	"fmt"
 	"net/http"
 	"go-irrigation-report-backend/models"
 
