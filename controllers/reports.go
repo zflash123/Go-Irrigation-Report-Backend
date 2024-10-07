@@ -14,6 +14,7 @@ type Reports struct {
 	CreatedAt						string
 	DoneAt							string
 	Level								string
+	Note								string
 }
 
 func GetReportById(w http.ResponseWriter, r *http.Request){
