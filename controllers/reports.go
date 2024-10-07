@@ -18,4 +18,7 @@ func GetReportById(w http.ResponseWriter, r *http.Request){
 	Select("report.report_list.id").
 	Scan(&reports)
 
+	if queryReports.Error != nil {
+		fmt.Printf("%v", queryReports.Error)
+	}
 }
