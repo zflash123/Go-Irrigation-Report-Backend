@@ -15,6 +15,7 @@ type Reports struct {
 	DoneAt							string
 	Level								string
 	Note								string
+	Status							string
 }
 
 func GetReportById(w http.ResponseWriter, r *http.Request){
