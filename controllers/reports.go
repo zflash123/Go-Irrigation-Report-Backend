@@ -25,4 +25,5 @@ func GetReportById(w http.ResponseWriter, r *http.Request){
 	if queryReports.Error != nil {
 		fmt.Printf("%v", queryReports.Error)
 	}
+	err := json.NewEncoder(w).Encode(reports)
 }
