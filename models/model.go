@@ -34,7 +34,7 @@ func (User) TableName() string {
 }
 
 type Report	struct {
-	
+	ID			uuid.UUID
 }
 
 type Book struct {
