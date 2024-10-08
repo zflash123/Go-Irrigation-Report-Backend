@@ -17,6 +17,7 @@ type Reports struct {
 	Note								string
 	Status							string
 	CenterPointJson			string
+	IrrigationName			string
 }
 
 func GetReportById(w http.ResponseWriter, r *http.Request){
