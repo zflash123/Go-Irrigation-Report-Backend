@@ -38,6 +38,7 @@ type Report	struct {
 	UserID			string
 	StatusID		string
 	NoTicket		string
+	Note				string
 }
 
 type Book struct {
