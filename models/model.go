@@ -44,6 +44,10 @@ type Report	struct {
 	User				User
 }
 
+func (Report) TableName() string {
+	return "report.report_list"
+}
+
 type Book struct {
 	gorm.Model
 	Name		string
