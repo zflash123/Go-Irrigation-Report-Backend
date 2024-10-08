@@ -18,6 +18,7 @@ type Reports struct {
 	Status							string
 	CenterPointJson			string
 	IrrigationName			string
+	Canal								string
 }
 
 func GetReportById(w http.ResponseWriter, r *http.Request){
