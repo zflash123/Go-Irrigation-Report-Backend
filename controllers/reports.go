@@ -16,6 +16,7 @@ type Reports struct {
 	Level								string
 	Note								string
 	Status							string
+	CenterPointJson			string
 }
 
 func GetReportById(w http.ResponseWriter, r *http.Request){
