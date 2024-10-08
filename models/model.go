@@ -39,6 +39,7 @@ type Report	struct {
 	StatusID		string
 	NoTicket		string
 	Note				string
+	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
 }
 
 type Book struct {
