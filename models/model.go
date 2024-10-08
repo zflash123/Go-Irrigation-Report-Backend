@@ -37,6 +37,7 @@ type Report	struct {
 	ID					uuid.UUID				`gorm:"type:uuid;default:gen_random_uuid()"`
 	UserID			string
 	StatusID		string
+	NoTicket		string
 }
 
 type Book struct {
