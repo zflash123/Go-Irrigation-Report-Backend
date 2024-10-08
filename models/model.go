@@ -41,6 +41,7 @@ type Report	struct {
 	Note				string
 	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
 	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
+	User				User
 }
 
 type Book struct {
