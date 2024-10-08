@@ -33,6 +33,10 @@ func (User) TableName() string {
 	return "user.users"
 }
 
+type Report	struct {
+	
+}
+
 type Book struct {
 	gorm.Model
 	Name		string
