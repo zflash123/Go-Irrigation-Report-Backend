@@ -40,6 +40,7 @@ type Report	struct {
 	NoTicket		string
 	Note				string
 	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
+	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
 }
 
 type Book struct {
