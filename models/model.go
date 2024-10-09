@@ -36,6 +36,7 @@ func (User) TableName() string {
 type Status	struct {
 	ID					uuid.UUID
 	Name				string
+	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
 }
 
 type Report	struct {
