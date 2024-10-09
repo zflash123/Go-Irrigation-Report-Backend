@@ -43,3 +43,7 @@ func GetReportById(w http.ResponseWriter, r *http.Request){
 		fmt.Printf("%v", err)
 	}
 }
+
+func CreateReport(){
+	
+}
