@@ -37,6 +37,7 @@ type Status	struct {
 	ID					uuid.UUID
 	Name				string
 	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
+	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
 }
 
 type Report	struct {
