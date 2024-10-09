@@ -49,6 +49,7 @@ type Report	struct {
 	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
 	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
 	User				User
+	Status			Status
 }
 
 func (Report) TableName() string {
