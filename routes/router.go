@@ -23,6 +23,7 @@ func Routes() {
 	user.Use(middleware.VerifyJwtToken)
 	user.HandleFunc("/close-segments", controllers.GetCloseSegments).Methods("GET")
 	user.HandleFunc("/report/{id}", controllers.GetReportById).Methods("GET")
+	user.HandleFunc("/report", controllers.CreateReport).Methods("POST")
 
 	handler := cors.Default().Handler(r)
 	log.Fatal(http.ListenAndServe(":8080", handler))
