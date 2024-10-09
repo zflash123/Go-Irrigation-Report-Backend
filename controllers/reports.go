@@ -44,6 +44,6 @@ func GetReportById(w http.ResponseWriter, r *http.Request){
 	}
 }
 
-func CreateReport(){
+func CreateReport(w http.ResponseWriter, r *http.Request){
 	
 }
