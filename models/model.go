@@ -40,6 +40,10 @@ type Status	struct {
 	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
 }
 
+func (Status) TableName() string {
+	return "report.status"
+}
+
 type Report	struct {
 	ID					uuid.UUID				`gorm:"type:uuid;default:gen_random_uuid()"`
 	UserID			string
