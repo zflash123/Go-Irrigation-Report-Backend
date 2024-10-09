@@ -35,6 +35,7 @@ func (User) TableName() string {
 
 type Status	struct {
 	ID					uuid.UUID
+	Name				string
 }
 
 type Report	struct {
