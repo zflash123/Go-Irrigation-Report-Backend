@@ -49,7 +49,6 @@ type Report	struct {
 	UserID			string
 	StatusID		string
 	NoTicket		string
-	Note				string
 	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
 	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
 	User				User
