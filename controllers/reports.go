@@ -60,5 +60,6 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 	var report = models.Report{
 		UserID: user_id,
 		StatusID: "485a2f73-294c-4511-ae87-59e70391a6db",
+		NoTicket: no_ticket,
 	}
 }
