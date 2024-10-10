@@ -79,7 +79,8 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	var res Response
 	if emailCheckErr == nil && isPwdCorrect {
 		res.Message = "Your account successfully logged in"
-		strJwt := CreateJwt(users[0].Email, users[0].FirstName)
+		strUserID := fmt.Sprintf("%v", users[0].ID)
+		strJwt := CreateJwt(strUserID, users[0].Email, users[0].FirstName)
 		res.Auth = strJwt
 
 		w.WriteHeader(http.StatusOK)
