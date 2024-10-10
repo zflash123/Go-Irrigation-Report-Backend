@@ -53,4 +53,6 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 	strYear := fmt.Sprintf("%v", year)
 	shortYear := strYear[2:4]
 	rand.Seed(int64(day)+time.Now().UnixNano())
+	min := 10000
+	max := 99999
 }
