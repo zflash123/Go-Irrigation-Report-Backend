@@ -64,6 +64,7 @@ type ReportSegment struct {
 	ReportID		string
 	SegmentID		string
 	Level				string
+	Note				string
 }
 
 type Book struct {
