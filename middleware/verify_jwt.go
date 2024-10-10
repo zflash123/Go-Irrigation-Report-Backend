@@ -77,6 +77,8 @@ func VerifyJwtToken(next http.Handler) http.Handler {
 		if ok {
 			ctx := context.WithValue(r.Context(), "user_id", claims["id"])
 			newR := r.WithContext(ctx)
+
+			next.ServeHTTP(w, newR)
 		}
 		next.ServeHTTP(w, r)
 	})
