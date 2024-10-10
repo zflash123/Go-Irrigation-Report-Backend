@@ -50,4 +50,5 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 	r.ParseForm()
 	year, month, day := time.Now().Date()
 	strYear := fmt.Sprintf("%v", year)
+	shortYear := strYear[2:4]
 }
