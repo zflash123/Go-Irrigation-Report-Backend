@@ -80,6 +80,5 @@ func VerifyJwtToken(next http.Handler) http.Handler {
 
 			next.ServeHTTP(w, newR)
 		}
-		next.ServeHTTP(w, r)
 	})
 }
