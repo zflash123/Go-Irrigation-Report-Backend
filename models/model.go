@@ -59,6 +59,10 @@ func (Report) TableName() string {
 	return "report.report_list"
 }
 
+type ReportSegment struct {
+	ID					uuid.UUID
+}
+
 type Book struct {
 	gorm.Model
 	Name		string
