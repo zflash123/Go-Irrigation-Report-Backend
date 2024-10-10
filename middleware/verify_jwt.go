@@ -80,5 +80,6 @@ func VerifyJwtToken(next http.Handler) http.Handler {
 
 			next.ServeHTTP(w, newR)
 		}
+		res.Message = "There is an error when get the claims data"
 	})
 }
