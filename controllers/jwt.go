@@ -25,7 +25,7 @@ func viperEnvConfig() {
 	}
 }
 
-func CreateJwt(email string, name string) string {
+func CreateJwt(id string, email string, name string) string {
 	viperEnvConfig()
 
 	strKey := fmt.Sprintf("%v", viper.Get("JWT_KEY"))
@@ -33,6 +33,7 @@ func CreateJwt(email string, name string) string {
 	fmt.Printf("key = %v", key)
 	jwtToken = jwt.NewWithClaims(jwt.SigningMethodHS256,
 							jwt.MapClaims{
+								"id": id,
 								"email": email,
 								"name": name,
 								"exp": time.Now().Add(time.Hour * 12).Unix(),
