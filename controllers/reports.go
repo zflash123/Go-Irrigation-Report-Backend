@@ -58,5 +58,6 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 	no_ticket := fmt.Sprintf("%v%v%v", shortYear, int(month), (rand.Intn(max - min + 1) + min))
 	user_id := fmt.Sprintf("%v", r.Context().Value("user_id"))
 	var report = models.Report{
+		UserID: user_id,
 	}
 }
