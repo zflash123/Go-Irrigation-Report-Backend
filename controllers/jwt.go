@@ -30,7 +30,6 @@ func CreateJwt(id string, email string, name string) string {
 
 	strKey := fmt.Sprintf("%v", viper.Get("JWT_KEY"))
 	key = []byte(strKey)
-	fmt.Printf("key = %v", key)
 	jwtToken = jwt.NewWithClaims(jwt.SigningMethodHS256,
 							jwt.MapClaims{
 								"id": id,
