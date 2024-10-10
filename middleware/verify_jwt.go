@@ -79,12 +79,13 @@ func VerifyJwtToken(next http.Handler) http.Handler {
 			newR := r.WithContext(ctx)
 
 			next.ServeHTTP(w, newR)
+		} else {
+			res.Message = "There is an error when get the claims data"
+			err = json.NewEncoder(w).Encode(res)
+			if err!=nil {
+				res.Message = "There is an error when encoding res object to the JSON and writing it to w"
+			}
+			return
 		}
-		res.Message = "There is an error when get the claims data"
-		err = json.NewEncoder(w).Encode(res)
-		if err!=nil {
-			res.Message = "There is an error when encoding res object to the JSON and writing it to w"
-		}
-		return
 	})
 }
