@@ -5,6 +5,7 @@ import(
 	"fmt"
 	"net/http"
 	"time"
+	"math/rand"
 	"go-irrigation-report-backend/models"
 
 	"github.com/gorilla/mux"
