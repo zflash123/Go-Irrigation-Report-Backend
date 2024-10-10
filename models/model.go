@@ -65,6 +65,7 @@ type ReportSegment struct {
 	SegmentID		string
 	Level				string
 	Note				string
+	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
 }
 
 type Book struct {
