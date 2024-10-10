@@ -74,6 +74,9 @@ func VerifyJwtToken(next http.Handler) http.Handler {
 		}
 
 		claims, ok := token.Claims.(jwt.MapClaims);
+		if ok {
+			ctx := context.WithValue(r.Context(), "user_id", claims["id"])
+		}
 		next.ServeHTTP(w, r)
 	})
 }
