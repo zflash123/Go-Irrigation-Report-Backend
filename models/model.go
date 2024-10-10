@@ -69,6 +69,10 @@ type ReportSegment struct {
 	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
 }
 
+func (ReportSegment) TableName() string {
+	return "report.report_segment"
+}
+
 type Book struct {
 	gorm.Model
 	Name		string
