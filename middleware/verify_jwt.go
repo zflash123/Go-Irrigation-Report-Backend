@@ -82,5 +82,8 @@ func VerifyJwtToken(next http.Handler) http.Handler {
 		}
 		res.Message = "There is an error when get the claims data"
 		err = json.NewEncoder(w).Encode(res)
+		if err!=nil {
+			res.Message = "There is an error when encoding res object to the JSON and writing it to w"
+		}
 	})
 }
