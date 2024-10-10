@@ -55,4 +55,5 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 	rand.Seed(int64(day)+time.Now().UnixNano())
 	min := 10000
 	max := 99999
+	no_ticket := fmt.Sprintf("%v%v%v", shortYear, int(month), (rand.Intn(max - min + 1) + min))
 }
