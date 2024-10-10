@@ -72,6 +72,7 @@ func VerifyJwtToken(next http.Handler) http.Handler {
 			return
 		}
 
+		claims, ok := token.Claims.(jwt.MapClaims);
 		next.ServeHTTP(w, r)
 	})
 }
