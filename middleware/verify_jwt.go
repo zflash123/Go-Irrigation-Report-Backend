@@ -85,5 +85,6 @@ func VerifyJwtToken(next http.Handler) http.Handler {
 		if err!=nil {
 			res.Message = "There is an error when encoding res object to the JSON and writing it to w"
 		}
+		return
 	})
 }
