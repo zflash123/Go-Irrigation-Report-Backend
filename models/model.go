@@ -61,6 +61,7 @@ func (Report) TableName() string {
 
 type ReportSegment struct {
 	ID					uuid.UUID			 `gorm:"type:uuid;default:gen_random_uuid()"`
+	ReportID		string
 }
 
 type Book struct {
