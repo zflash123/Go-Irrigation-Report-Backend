@@ -63,6 +63,7 @@ type ReportSegment struct {
 	ID					uuid.UUID			 `gorm:"type:uuid;default:gen_random_uuid()"`
 	ReportID		string
 	SegmentID		string
+	Level				string
 }
 
 type Book struct {
