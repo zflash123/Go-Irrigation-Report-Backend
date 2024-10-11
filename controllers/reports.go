@@ -62,4 +62,5 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 		StatusID: "485a2f73-294c-4511-ae87-59e70391a6db",
 		TicketNo: ticket_no,
 	}
+	models.Db.Create(&report)
 }
