@@ -63,4 +63,5 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 		TicketNo: ticket_no,
 	}
 	models.Db.Create(&report)
+	report_id := fmt.Sprintf("%v", report.ID)
 }
