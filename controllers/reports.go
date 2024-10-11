@@ -70,4 +70,5 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 		Level: r.Form["level1"][0],
 		Note: r.Form["note1"][0],
 	}
+	models.Db.Create(&reportSegment)
 }
