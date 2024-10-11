@@ -48,7 +48,7 @@ type Report	struct {
 	ID					uuid.UUID				`gorm:"type:uuid;default:gen_random_uuid()"`
 	UserID			string
 	StatusID		string
-	NoTicket		string
+	TicketNo		string
 	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
 	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
 	User				User
