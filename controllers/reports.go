@@ -65,5 +65,6 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 	models.Db.Create(&report)
 	report_id := fmt.Sprintf("%v", report.ID)
 	var reportSegment = models.ReportSegment{
+		ReportID: report_id,
 	}
 }
