@@ -68,5 +68,6 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 		ReportID: report_id,
 		SegmentID: r.Form["segment_id1"][0],
 		Level: r.Form["level1"][0],
+		Note: r.Form["note1"][0],
 	}
 }
