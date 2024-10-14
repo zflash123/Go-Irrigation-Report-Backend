@@ -18,4 +18,5 @@ func UploadImage(image string) error {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+	res1 := regex.FindString(image)
 }
