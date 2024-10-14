@@ -15,4 +15,7 @@ func UploadImage(image string) error {
 		return fmt.Errorf("The extension is prohibited.")
 	}
 	regex, err := regexp.Compile(`(?i)data:image/[\w]+;base64,`)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 }
