@@ -3,6 +3,7 @@ package controllers
 import(
 	"fmt"
 	"strings"
+	"regexp"
 )
 
 func UploadImage(image string) error {
@@ -13,4 +14,5 @@ func UploadImage(image string) error {
 	if(imageExtension=="go" || imageExtension=="svg"){
 		return fmt.Errorf("The extension is prohibited.")
 	}
+	regex, err := regexp.Compile(`(?i)data:image/[\w]+;base64,`)
 }
