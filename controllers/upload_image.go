@@ -4,6 +4,8 @@ import(
 	"fmt"
 	"strings"
 	"regexp"
+	"crypto/rand"
+	"encoding/hex"
 )
 
 func UploadImage(image string) error {
