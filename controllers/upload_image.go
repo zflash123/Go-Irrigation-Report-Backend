@@ -14,6 +14,7 @@ func GenerateCryptoID() string {
 		panic(err)
 	}
 	result := hex.EncodeToString(bytes)
+	result = result[0:13]
 }
 
 func UploadImage(image string) error {
