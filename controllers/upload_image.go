@@ -8,6 +8,9 @@ import(
 	"encoding/hex"
 )
 
+func GenerateCryptoID() string {
+}
+
 func UploadImage(image string) error {
 	parts := strings.Split(image, ";")
 	mimePart := strings.Split(parts[0], ":")
