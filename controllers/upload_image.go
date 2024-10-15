@@ -19,4 +19,5 @@ func UploadImage(image string) error {
 		fmt.Println(err.Error())
 	}
 	res1 := regex.FindString(image)
+	image = strings.Replace(image, res1, "", 1)
 }
