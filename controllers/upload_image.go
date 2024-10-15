@@ -13,6 +13,7 @@ func GenerateCryptoID() string {
 	if _, err := rand.Read(bytes); err != nil {
 		panic(err)
 	}
+	result := hex.EncodeToString(bytes)
 }
 
 func UploadImage(image string) error {
