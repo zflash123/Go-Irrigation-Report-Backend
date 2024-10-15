@@ -10,6 +10,9 @@ import(
 
 func GenerateCryptoID() string {
 	bytes := make([]byte, 7)
+	if _, err := rand.Read(bytes); err != nil {
+		panic(err)
+	}
 }
 
 func UploadImage(image string) error {
