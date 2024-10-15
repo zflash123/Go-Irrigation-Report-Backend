@@ -34,4 +34,5 @@ func UploadImage(image string) error {
 	image = strings.Replace(image, res1, "", 1)
 	uniqueId := GenerateCryptoID()
 	imageName := fmt.Sprintf("%v.%v", uniqueId, imageExtension)
+	wd, _ := os.Getwd()
 }
