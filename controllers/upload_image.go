@@ -33,4 +33,5 @@ func UploadImage(image string) error {
 	res1 := regex.FindString(image)
 	image = strings.Replace(image, res1, "", 1)
 	uniqueId := GenerateCryptoID()
+	imageName := fmt.Sprintf("%v.%v", uniqueId, imageExtension)
 }
