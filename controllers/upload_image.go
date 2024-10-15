@@ -6,6 +6,7 @@ import(
 	"regexp"
 	"crypto/rand"
 	"encoding/hex"
+	"encoding/base64"
 	"os"
 )
 
