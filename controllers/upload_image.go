@@ -46,4 +46,8 @@ func UploadImage(image string) error {
 
 	fmt.Fprintf(destination, "%s", strDecodedImg)
 	errUploadToFB := UploadToFirebase(imagePath, imageName)
+	if errUploadToFB!=nil {
+		return errUploadToFB
+	}
+	return nil
 }
