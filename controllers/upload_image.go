@@ -37,4 +37,7 @@ func UploadImage(image string) error {
 	imageName := fmt.Sprintf("%v.%v", uniqueId, imageExtension)
 	wd, _ := os.Getwd()
 	imagePath := fmt.Sprintf("%v/images/%v", wd, imageName)
+	var decodedImg []byte
+	decodedImg, _ = base64.StdEncoding.DecodeString(image)
+	strDecodedImg := string(decodedImg)
 }
