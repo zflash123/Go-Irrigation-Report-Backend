@@ -41,4 +41,5 @@ func UploadImage(image string) error {
 	var decodedImg []byte
 	decodedImg, _ = base64.StdEncoding.DecodeString(image)
 	strDecodedImg := string(decodedImg)
+	destination, _ := os.Create(imagePath)
 }
