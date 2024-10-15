@@ -9,6 +9,7 @@ import(
 )
 
 func GenerateCryptoID() string {
+	bytes := make([]byte, 7)
 }
 
 func UploadImage(image string) error {
