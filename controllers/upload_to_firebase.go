@@ -21,4 +21,7 @@ func UploadToFirebase(imagePath string, objectName string) error {
 		return fmt.Errorf("storage.NewClient: %w", err)
 	}
 	defer client.Close()
+
+	// Open local file.
+	f, err := os.Open(imagePath)
 }
