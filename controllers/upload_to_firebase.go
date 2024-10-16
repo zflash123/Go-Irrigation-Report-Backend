@@ -12,4 +12,5 @@ func UploadToFirebase(imagePath string, objectName string) error {
 	bucket := fmt.Sprintf("%v", viper.Get("GCS_BUCKET"))
 	ctx := context.Background()
 	wd, _ := os.Getwd()
+	credentialsPath := fmt.Sprintf("%v/firebase-storage-credentials.json", wd)
 }
