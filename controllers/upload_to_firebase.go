@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"context"
 	"os"
+	"time"
+	
 	"github.com/spf13/viper"
 	"cloud.google.com/go/storage"
 	"google.golang.org/api/option"
@@ -28,4 +30,6 @@ func UploadToFirebase(imagePath string, objectName string) error {
 		return fmt.Errorf("os.Open: %w", err)
 	}
 	defer f.Close()
+
+	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 }
