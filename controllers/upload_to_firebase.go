@@ -24,4 +24,7 @@ func UploadToFirebase(imagePath string, objectName string) error {
 
 	// Open local file.
 	f, err := os.Open(imagePath)
+	if err != nil {
+		return fmt.Errorf("os.Open: %w", err)
+	}
 }
