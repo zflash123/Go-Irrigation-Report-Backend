@@ -27,4 +27,5 @@ func UploadToFirebase(imagePath string, objectName string) error {
 	if err != nil {
 		return fmt.Errorf("os.Open: %w", err)
 	}
+	defer f.Close()
 }
