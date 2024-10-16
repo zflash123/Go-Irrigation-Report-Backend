@@ -5,6 +5,7 @@ import (
 	"context"
 	"os"
 	"github.com/spf13/viper"
+	"google.golang.org/api/option"
 )
 
 func UploadToFirebase(imagePath string, objectName string) error {
@@ -13,4 +14,5 @@ func UploadToFirebase(imagePath string, objectName string) error {
 	ctx := context.Background()
 	wd, _ := os.Getwd()
 	credentialsPath := fmt.Sprintf("%v/firebase-storage-credentials.json", wd)
+	opt := option.WithCredentialsFile(credentialsPath)
 }
