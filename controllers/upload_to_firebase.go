@@ -15,4 +15,5 @@ func UploadToFirebase(imagePath string, objectName string) error {
 	wd, _ := os.Getwd()
 	credentialsPath := fmt.Sprintf("%v/firebase-storage-credentials.json", wd)
 	opt := option.WithCredentialsFile(credentialsPath)
+	client, err := storage.NewClient(ctx, opt)
 }
