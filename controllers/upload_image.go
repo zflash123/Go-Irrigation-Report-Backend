@@ -20,13 +20,13 @@ func GenerateCryptoID() string {
 	return result
 }
 
-func UploadImage(image string) error {
+func UploadImage(image string) (fileUrl string, err error) {
 	parts := strings.Split(image, ";")
 	mimePart := strings.Split(parts[0], ":")
 	mime := mimePart[1]
 	imageExtension := strings.Split(mime, "/")[1]
 	if(imageExtension=="go" || imageExtension=="svg"){
-		return fmt.Errorf("The extension is prohibited.")
+		return "", fmt.Errorf("The extension is prohibited.")
 	}
 	regex, err := regexp.Compile(`(?i)data:image/[\w]+;base64,`)
 	if err != nil {
@@ -45,9 +45,9 @@ func UploadImage(image string) error {
 	defer destination.Close()
 
 	fmt.Fprintf(destination, "%s", strDecodedImg)
-	errUploadToFB := UploadToFirebase(imagePath, imageName)
+	fileUrl, errUploadToFB := UploadToFirebase(imagePath, imageName)
 	if errUploadToFB!=nil {
-		return errUploadToFB
+		return "", errUploadToFB
 	}
-	return nil
+	return fileUrl, nil
 }
