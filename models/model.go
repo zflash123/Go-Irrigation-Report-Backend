@@ -73,6 +73,17 @@ func (ReportSegment) TableName() string {
 	return "report.report_segment"
 }
 
+type UploadDump struct {
+	ID					uuid.UUID
+	Filename		string
+	FileType		string
+	Size				string
+	Folder			string
+	FileUrl			string
+	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
+	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
+}
+
 type Book struct {
 	gorm.Model
 	Name		string
