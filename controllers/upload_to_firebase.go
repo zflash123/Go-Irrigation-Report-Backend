@@ -46,4 +46,5 @@ func UploadToFirebase(imagePath string, objectName string) error {
 	if err := sw.Close(); err != nil {
 		return fmt.Errorf("Writer.Close: %w", err)
 	}
+	return nil
 }
