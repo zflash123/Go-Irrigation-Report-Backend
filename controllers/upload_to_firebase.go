@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"io"
 	"context"
 	"os"
 	"time"
@@ -39,4 +40,7 @@ func UploadToFirebase(imagePath string, objectName string) error {
 	o = o.If(storage.Conditions{DoesNotExist: true})
 	// Upload an object with storage.Writer.
 	sw := o.NewWriter(ctx)
+	if _, err = io.Copy(sw, f); err != nil {
+		return fmt.Errorf("io.Copy: %w", err)
+	}
 }
