@@ -37,4 +37,6 @@ func UploadToFirebase(imagePath string, objectName string) error {
 	o := client.Bucket(bucket).Object(objectName)
 	//Add precondition to check the object name of the bucket is not exist.
 	o = o.If(storage.Conditions{DoesNotExist: true})
+	// Upload an object with storage.Writer.
+	sw := o.NewWriter(ctx)
 }
