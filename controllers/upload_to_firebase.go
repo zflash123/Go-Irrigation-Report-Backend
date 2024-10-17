@@ -33,4 +33,6 @@ func UploadToFirebase(imagePath string, objectName string) error {
 
 	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 	defer cancel()
+
+	o := client.Bucket(bucket).Object(objectName)
 }
