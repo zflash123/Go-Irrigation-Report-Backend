@@ -84,6 +84,10 @@ type UploadDump struct {
 	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
 }
 
+func (UploadDump) TableName() string {
+	return "file.upload_dump"
+}
+
 type Book struct {
 	gorm.Model
 	Name		string
