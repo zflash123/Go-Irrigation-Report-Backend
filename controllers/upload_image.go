@@ -8,6 +8,7 @@ import(
 	"encoding/hex"
 	"encoding/base64"
 	"os"
+	"go-irrigation-report-backend/models"
 )
 
 func GenerateCryptoID() string {
@@ -46,10 +47,17 @@ func UploadImage(image string) (fileUrl string, err error) {
 
 	fmt.Fprintf(destination, "%s", strDecodedImg)
 	fileUrl, errUploadToFB := UploadToFirebase(imagePath, imageName)
-	fileStat, _ := destination.Stat()
-	fileSize := fileStat.Size()
 	if errUploadToFB!=nil {
 		return "", errUploadToFB
+	}
+	fileStat, _ := destination.Stat()
+	fileSize := fileStat.Size()
+	var uploadDump = models.UploadDump{
+		Filename: imageName,
+		FileType: imageExtension,
+		Size: uint32(fileSize),
+		Folder: "root",
+		FileUrl: fileUrl,
 	}
 	return fileUrl, nil
 }
