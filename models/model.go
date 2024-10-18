@@ -77,7 +77,7 @@ type UploadDump struct {
 	ID					uuid.UUID
 	Filename		string
 	FileType		string
-	Size				string
+	Size				uint32
 	Folder			string
 	FileUrl			string
 	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
