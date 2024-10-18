@@ -73,4 +73,5 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 	models.Db.Create(&reportSegment)
 	report_segment_id := fmt.Sprintf("%v", reportSegment.ID)
 	uploadDumpID, err :=UploadImage(r.Form["image1"][0])
+	var res Response
 }
