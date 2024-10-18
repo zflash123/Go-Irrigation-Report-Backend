@@ -85,4 +85,5 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 		ReportSegmentID: report_segment_id,
 		UploadDumpID: uploadDumpID,
 	}
+	models.Db.Create(&reportPhoto)
 }
