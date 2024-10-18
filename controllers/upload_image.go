@@ -21,7 +21,7 @@ func GenerateCryptoID() string {
 	return result
 }
 
-func UploadImage(image string) (fileUrl string, err error) {
+func UploadImage(image string) (uploadDumpID string, err error) {
 	parts := strings.Split(image, ";")
 	mimePart := strings.Split(parts[0], ":")
 	mime := mimePart[1]
@@ -60,5 +60,6 @@ func UploadImage(image string) (fileUrl string, err error) {
 		FileUrl: fileUrl,
 	}
 	models.Db.Create(&uploadDump)
-	return fileUrl, nil
+	uploadDumpID = fmt.Sprintf("%s", uploadDump.ID)
+	return uploadDumpID, nil
 }
