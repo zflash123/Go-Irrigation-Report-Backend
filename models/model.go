@@ -88,6 +88,16 @@ func (UploadDump) TableName() string {
 	return "file.upload_dump"
 }
 
+type ReportPhoto struct {
+	ID							uuid.UUID
+	ReportSegmentID	string
+	UploadDumpID		string
+	CreatedAt 			time.Time			 `gorm:"autoCreateTime"`
+	UpdatedAt 			time.Time			 `gorm:"autoUpdateTime"`
+	ReportSegment		ReportSegment
+	UploadDump			UploadDump
+}
+
 type Book struct {
 	gorm.Model
 	Name		string
