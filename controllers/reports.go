@@ -77,5 +77,8 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 	if err!=nil {
 		res.Message = fmt.Sprintf("%s", err)
 		err := json.NewEncoder(w).Encode(res)
+		if err != nil {
+			fmt.Printf("%s", err)
+		}
 	}
 }
