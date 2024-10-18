@@ -86,4 +86,6 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 		UploadDumpID: uploadDumpID,
 	}
 	models.Db.Create(&reportPhoto)
+	res.Message = "Create report operation is successful"
+	err = json.NewEncoder(w).Encode(res)
 }
