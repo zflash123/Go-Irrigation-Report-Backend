@@ -81,4 +81,8 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 			fmt.Printf("%s", err)
 		}
 	}
+	var reportPhoto = models.ReportPhoto{
+		ReportSegmentID: report_segment_id,
+		UploadDumpID: uploadDumpID,
+	}
 }
