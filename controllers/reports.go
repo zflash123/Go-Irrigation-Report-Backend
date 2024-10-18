@@ -88,4 +88,7 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 	models.Db.Create(&reportPhoto)
 	res.Message = "Create report operation is successful"
 	err = json.NewEncoder(w).Encode(res)
+	if err != nil {
+		fmt.Printf("%s", err)
+	}
 }
