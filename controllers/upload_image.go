@@ -59,5 +59,6 @@ func UploadImage(image string) (fileUrl string, err error) {
 		Folder: "root",
 		FileUrl: fileUrl,
 	}
+	models.Db.Create(&uploadDump)
 	return fileUrl, nil
 }
