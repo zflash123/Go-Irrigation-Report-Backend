@@ -74,4 +74,8 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 	report_segment_id := fmt.Sprintf("%v", reportSegment.ID)
 	uploadDumpID, err :=UploadImage(r.Form["image1"][0])
 	var res Response
+	if err!=nil {
+		res.Message = fmt.Sprintf("%s", err)
+		err := json.NewEncoder(w).Encode(res)
+	}
 }
