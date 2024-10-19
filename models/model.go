@@ -98,6 +98,10 @@ type ReportPhoto struct {
 	UploadDump			UploadDump
 }
 
+func (ReportPhoto) TableName() string {
+	return "report.report_photo"
+}
+
 type Book struct {
 	gorm.Model
 	Name		string
