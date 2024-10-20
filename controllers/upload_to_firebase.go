@@ -15,6 +15,8 @@ import (
 func UploadToFirebase(imagePath string, objectName string) (fileUrl string, err error) {
 	viperEnvConfig()
 	bucket := fmt.Sprintf("%v", viper.Get("GCS_BUCKET"))
+	entity := storage.AllUsers
+	role := storage.RoleReader
 	fileUrl = "https://storage.googleapis.com/"+bucket+"/"+objectName
 	ctx := context.Background()
 	wd, _ := os.Getwd()
@@ -36,6 +38,11 @@ func UploadToFirebase(imagePath string, objectName string) (fileUrl string, err 
 	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 	defer cancel()
 
+	// err = o.ACL().Set(ctx, storage.AllUsers, storage.RoleReader)
+	// if err!=nil{
+	// 	fmt.Println("ACLHandle.Set: ", err)
+	// 	return "", fmt.Errorf("ACLHandle.Set: %w", err)
+	// }
 	o := client.Bucket(bucket).Object(objectName)
 	//Add precondition to check the object name of the bucket is not exist.
 	o = o.If(storage.Conditions{DoesNotExist: true})
@@ -46,6 +53,10 @@ func UploadToFirebase(imagePath string, objectName string) (fileUrl string, err 
 	}
 	if err := sw.Close(); err != nil {
 		return "", fmt.Errorf("Writer.Close: %w", err)
+	}
+	acl := client.Bucket(bucket).Object(objectName).ACL()
+	if err := acl.Set(ctx, entity, role); err != nil {
+		return "", fmt.Errorf("ACLHandle.Set: %w", err)
 	}
 	return fileUrl, nil
 }
