@@ -87,6 +87,30 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 		UploadDumpID: uploadDumpID,
 	}
 	models.Db.Create(&reportPhoto)
+	if r.Form["segment_id2"][0] != "" {
+		var reportSegment = models.ReportSegment{
+			ReportID: report_id,
+			SegmentID: r.Form["segment_id2"][0],
+			Level: r.Form["level2"][0],
+			Note: r.Form["note2"][0],
+		}
+		models.Db.Create(&reportSegment)
+		report_segment_id := fmt.Sprintf("%v", reportSegment.ID)
+		uploadDumpID, err :=UploadImage(r.Form["image2"][0])
+		if err!=nil {
+			res.Message = fmt.Sprintf("%s", err)
+			err := json.NewEncoder(w).Encode(res)
+			if err != nil {
+				fmt.Printf("%s", err)
+			}
+			return
+		}
+		var reportPhoto = models.ReportPhoto{
+			ReportSegmentID: report_segment_id,
+			UploadDumpID: uploadDumpID,
+		}
+		models.Db.Create(&reportPhoto)
+	}
 	w.WriteHeader(http.StatusCreated)
 	res.Message = "Create report operation is successful"
 	err = json.NewEncoder(w).Encode(res)
