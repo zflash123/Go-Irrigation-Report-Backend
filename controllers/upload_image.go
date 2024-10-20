@@ -43,7 +43,6 @@ func UploadImage(image string) (uploadDumpID string, err error) {
 	decodedImg, _ = base64.StdEncoding.DecodeString(image)
 	strDecodedImg := string(decodedImg)
 	destination, _ := os.Create(imagePath)
-	defer destination.Close()
 
 	fmt.Fprintf(destination, "%s", strDecodedImg)
 	fileUrl, errUploadToFB := UploadToFirebase(imagePath, imageName)
@@ -61,5 +60,10 @@ func UploadImage(image string) (uploadDumpID string, err error) {
 	}
 	models.Db.Create(&uploadDump)
 	uploadDumpID = fmt.Sprintf("%s", uploadDump.ID)
+	destination.Close()
+	err = os.Remove(imagePath)
+	if err!=nil {
+		fmt.Println("Err: ", err)
+	}
 	return uploadDumpID, nil
 }
