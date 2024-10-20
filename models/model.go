@@ -74,7 +74,7 @@ func (ReportSegment) TableName() string {
 }
 
 type UploadDump struct {
-	ID					uuid.UUID
+	ID					uuid.UUID			 `gorm:"type:uuid;default:gen_random_uuid()"`
 	Filename		string
 	FileType		string
 	Size				uint32
@@ -89,7 +89,7 @@ func (UploadDump) TableName() string {
 }
 
 type ReportPhoto struct {
-	ID							uuid.UUID
+	ID							uuid.UUID			 `gorm:"type:uuid;default:gen_random_uuid()"`
 	ReportSegmentID	string
 	UploadDumpID		string
 	CreatedAt 			time.Time			 `gorm:"autoCreateTime"`
