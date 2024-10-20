@@ -27,7 +27,7 @@ func UploadImage(image string) (uploadDumpID string, err error) {
 	mime := mimePart[1]
 	imageExtension := strings.Split(mime, "/")[1]
 	if(imageExtension=="go" || imageExtension=="svg"){
-		return "", fmt.Errorf("The extension is prohibited.")
+		return "", fmt.Errorf("the extension is prohibited")
 	}
 	regex, err := regexp.Compile(`(?i)data:image/[\w]+;base64,`)
 	if err != nil {
