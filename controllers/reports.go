@@ -4,6 +4,8 @@ import(
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
+	"math/rand"
 	"go-irrigation-report-backend/models"
 
 	"github.com/gorilla/mux"
@@ -47,12 +49,47 @@ func GetReportById(w http.ResponseWriter, r *http.Request){
 func CreateReport(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	r.ParseForm()
-	var res Response
+	year, month, day := time.Now().Date()
+	strYear := fmt.Sprintf("%v", year)
+	shortYear := strYear[2:4]
+	rand.Seed(int64(day)+time.Now().UnixNano())
+	min := 10000
+	max := 99999
+	ticket_no := fmt.Sprintf("%v%v%v", shortYear, int(month), (rand.Intn(max - min + 1) + min))
 	user_id := fmt.Sprintf("%v", r.Context().Value("user_id"))
-	makeReport(user_id, r.Form["segment_id1"][0], r.Form["level1"][0], r.Form["note1"][0], r.Form["image1"][0])
+	var report = models.Report{
+		UserID: user_id,
+		StatusID: "485a2f73-294c-4511-ae87-59e70391a6db",
+		TicketNo: ticket_no,
+	}
+	models.Db.Create(&report)
+	report_id := fmt.Sprintf("%v", report.ID)
+	var reportSegment = models.ReportSegment{
+		ReportID: report_id,
+		SegmentID: r.Form["segment_id1"][0],
+		Level: r.Form["level1"][0],
+		Note: r.Form["note1"][0],
+	}
+	models.Db.Create(&reportSegment)
+	report_segment_id := fmt.Sprintf("%v", reportSegment.ID)
+	uploadDumpID, err :=UploadImage(r.Form["image1"][0])
+	var res Response
+	if err!=nil {
+		res.Message = fmt.Sprintf("%s", err)
+		err := json.NewEncoder(w).Encode(res)
+		if err != nil {
+			fmt.Printf("%s", err)
+		}
+		return
+	}
+	var reportPhoto = models.ReportPhoto{
+		ReportSegmentID: report_segment_id,
+		UploadDumpID: uploadDumpID,
+	}
+	models.Db.Create(&reportPhoto)
 	w.WriteHeader(http.StatusCreated)
 	res.Message = "Create report operation is successful"
-	err := json.NewEncoder(w).Encode(res)
+	err = json.NewEncoder(w).Encode(res)
 	if err != nil {
 		fmt.Printf("%s", err)
 	}
