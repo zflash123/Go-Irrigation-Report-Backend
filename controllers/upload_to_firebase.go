@@ -38,11 +38,6 @@ func UploadToFirebase(imagePath string, objectName string) (fileUrl string, err 
 	ctx, cancel := context.WithTimeout(ctx, time.Second*50)
 	defer cancel()
 
-	// err = o.ACL().Set(ctx, storage.AllUsers, storage.RoleReader)
-	// if err!=nil{
-	// 	fmt.Println("ACLHandle.Set: ", err)
-	// 	return "", fmt.Errorf("ACLHandle.Set: %w", err)
-	// }
 	o := client.Bucket(bucket).Object(objectName)
 	//Add precondition to check the object name of the bucket is not exist.
 	o = o.If(storage.Conditions{DoesNotExist: true})
