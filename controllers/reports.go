@@ -80,6 +80,7 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 		if err != nil {
 			fmt.Printf("%s", err)
 		}
+		return
 	}
 	var reportPhoto = models.ReportPhoto{
 		ReportSegmentID: report_segment_id,
