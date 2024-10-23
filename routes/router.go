@@ -22,6 +22,7 @@ func Routes() {
 	user := r.PathPrefix("/api/user").Subrouter()
 	user.Use(middleware.VerifyJwtToken)
 	user.HandleFunc("/close-segments", controllers.GetCloseSegments).Methods("GET")
+	user.HandleFunc("/segments", controllers.GetSegmentsByUserId).Methods("GET")
 	user.HandleFunc("/report/{id}", controllers.GetReportById).Methods("GET")
 	user.HandleFunc("/reports", controllers.GetReportByUserId).Methods("GET")
 	user.HandleFunc("/report", controllers.CreateReport).Methods("POST")
