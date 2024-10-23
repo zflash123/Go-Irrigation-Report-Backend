@@ -52,7 +52,7 @@ func GetSegmentsByUserId(w http.ResponseWriter, r *http.Request) {
 	user_id := fmt.Sprintf("%v", r.Context().Value("user_id"))
 
 	var segments []Segments 
-	models.Db.Table("report.report_list").Select("report.status.name as status", "report.report_segment.segment_id", "report.report_segment.level", "map.irrigations_segment.geojson", "map.irrigations.name as irrigation_name", "map.irrigations.type as canal", "file.upload_dump.file_url as image").
+	query := models.Db.Table("report.report_list").Select("report.status.name as status", "report.report_segment.segment_id", "report.report_segment.level", "map.irrigations_segment.geojson", "map.irrigations.name as irrigation_name", "map.irrigations.type as canal", "file.upload_dump.file_url as image").
 	Joins("JOIN report.status ON report.status.id = report.report_list.status_id").
 	Joins("JOIN report.report_segment ON report.report_segment.report_id = report.report_list.id").
 	Joins("JOIN report.report_photo ON report.report_photo.report_segment_id = report.report_segment.id").
@@ -61,6 +61,15 @@ func GetSegmentsByUserId(w http.ResponseWriter, r *http.Request) {
 	Joins("JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id").
 	Where("report.report_list.user_id = ?", user_id).Scan(&segments)
 
+	if query.Error != nil {
+		var res Response
+		res.Message = "There is an error when executing the query."
+		w.WriteHeader(http.StatusInternalServerError)
+		err := json.NewEncoder(w).Encode(res)
+		if err != nil {
+			fmt.Printf("%v", err)
+		}
+	}
 	err := json.NewEncoder(w).Encode(segments)
 	if err != nil {
 		fmt.Printf("%v", err)
