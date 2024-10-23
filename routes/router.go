@@ -16,8 +16,8 @@ func Routes() {
 	models.Db_connection()
 	r := mux.NewRouter()
 	//basic
-	r.HandleFunc("/register", controllers.Register).Methods("POST")
-	r.HandleFunc("/login", controllers.Login).Methods("POST")
+	r.HandleFunc("/api/register", controllers.Register).Methods("POST")
+	r.HandleFunc("/api/login", controllers.Login).Methods("POST")
 	//routes for normal users
 	user := r.PathPrefix("/api/user").Subrouter()
 	user.Use(middleware.VerifyJwtToken)
