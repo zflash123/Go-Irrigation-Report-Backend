@@ -15,7 +15,7 @@ type CloseSegments struct {
 	Geojson string    `json:"geojson"`
 }
 
-type Segments struct {
+type Segment struct {
 	SegmentID 					uuid.UUID `json:"id"`
 	IrrigationName			string    `json:"irrigation"`
 	Geojson 						string    `json:"geojson"`
@@ -51,7 +51,7 @@ func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
 func GetSegmentsByUserId(w http.ResponseWriter, r *http.Request) {
 	user_id := fmt.Sprintf("%v", r.Context().Value("user_id"))
 
-	var segments []Segments 
+	var segments []Segment
 	query := models.Db.Table("report.report_list").Select("report.status.name as status", "report.report_segment.segment_id", "report.report_segment.level", "map.irrigations_segment.geojson", "map.irrigations.name as irrigation_name", "map.irrigations.type as canal", "file.upload_dump.file_url as image").
 	Joins("JOIN report.status ON report.status.id = report.report_list.status_id").
 	Joins("JOIN report.report_segment ON report.report_segment.report_id = report.report_list.id").
