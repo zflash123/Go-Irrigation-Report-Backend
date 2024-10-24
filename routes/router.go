@@ -27,6 +27,7 @@ func Routes() {
 	user.HandleFunc("/reports", controllers.GetReportByUserId).Methods("GET")
 	user.HandleFunc("/report", controllers.CreateReport).Methods("POST")
 	user.HandleFunc("/profile", controllers.GetUserProfile).Methods("GET")
+	user.HandleFunc("/profile", controllers.PutUserProfile).Methods("PUT")
 
 	handler := cors.Default().Handler(r)
 	log.Fatal(http.ListenAndServe(":8080", handler))
