@@ -14,6 +14,11 @@ type Response struct {
 	Message string
 }
 
+type CredentialsData struct {
+	Email string
+	Password string
+}
+
 func hashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 	return string(bytes), err
@@ -66,22 +71,52 @@ func Register(w http.ResponseWriter, r *http.Request) {
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	r.ParseForm()
+	var email = ""
+	var password = ""
+	var credentialsData CredentialsData
+	//If the req body use JSON data, then decode the JSON to an object
+	if(r.Header.Get("Content-Type") == "application/json"){
+		json.NewDecoder(r.Body).Decode(&credentialsData)
+		email = credentialsData.Email
+		password = credentialsData.Password
+	//Else If the req body use x-www-form-urlencoded data, so it will parsed as form data
+	} else if(r.Header.Get("Content-Type") == "application/x-www-form-urlencoded") {
+		r.ParseForm()
+		email = r.Form["email"][0]
+		password = r.Form["password"][0]
+	} else {
+		type Response struct {
+			Message string `json:"message"`
+		}
+		var res Response
+		
+		res.Message = "Content-Type not supported"
+		err := json.NewEncoder(w).Encode(res)
+		if err != nil {
+			log.Println(err)
+		}
+		return
+	}
+
+
 	var users []models.User
-	userData := models.Db.Where("email = ?", r.Form["email"][0]).First(&users)
+	userData := models.Db.Where("email = ?", email).First(&users)
 	emailCheckErr := userData.Error
-	isPwdCorrect := isPasswordMatched(users[0].Password, r.Form["password"][0])
-	type Response struct {
+	isPwdCorrect := isPasswordMatched(users[0].Password, password)
+	type Data struct {
 		Message string `json:"message"`
-		Auth    string `json:"auth_token"`
+		Auth    string `json:"jwtToken"`
+	}
+	type Response struct {
+		Data		Data		`json:"data"`
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	var res Response
 	if emailCheckErr == nil && isPwdCorrect {
-		res.Message = "Your account successfully logged in"
+		res.Data.Message = "Your account successfully logged in"
 		strUserID := fmt.Sprintf("%v", users[0].ID)
 		strJwt := CreateJwt(strUserID, users[0].Email, users[0].FirstName)
-		res.Auth = strJwt
+		res.Data.Auth = strJwt
 
 		w.WriteHeader(http.StatusOK)
 
@@ -91,12 +126,16 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		w.WriteHeader(http.StatusUnauthorized)
-		res.Message = "The email or password that you inputted is wrong"
-		res.Auth = "Not generated"
+		res.Data.Message = "The email or password that you inputted is wrong"
+		res.Data.Auth = "Not generated"
 
 		err := json.NewEncoder(w).Encode(res)
 		if err != nil {
 			log.Println(err)
 		}
 	}
+}
+
+func CheckValidCookie(w http.ResponseWriter, r *http.Request) {
+	return
 }
