@@ -59,6 +59,10 @@ func VerifyJwtToken(next http.Handler) http.Handler {
 
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
+			if jwtToken == "undefined" {
+				res.Message = "Your token value is 'undefined'"
+				return
+			}
 			if !token.Valid {
 				res.Message = "Your token is invalid"
 				err := json.NewEncoder(w).Encode(res)
