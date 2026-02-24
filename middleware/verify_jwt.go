@@ -12,22 +12,12 @@ import (
 	"github.com/spf13/viper"
 )
 
-func viperEnvConfig() {
-	viper.SetConfigFile(".env")
-	err := viper.ReadInConfig()
-
-	if err != nil {
-		log.Fatalln("There is an error with loading .env key value", err)
-	}
-}
-
 func VerifyJwtToken(next http.Handler) http.Handler {
 	type Response struct {
 		Message string `json:"message"`
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		viperEnvConfig()
 		var res Response
 
 		auth := r.Header.Get("Authorization")
