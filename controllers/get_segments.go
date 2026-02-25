@@ -48,6 +48,10 @@ func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
         ORDER BY
             distance;`, longitude, latitude, longitude, latitude).Scan(&closeSegments)
 
+	if closeSegments == nil{
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
 	err := json.NewEncoder(w).Encode(closeSegments)
 	if err != nil {
 		fmt.Printf("%v", err)
