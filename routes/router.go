@@ -14,6 +14,7 @@ import (
 )
 
 func Routes() {
+	config.ViperEnvConfig()
 	models.Db_connection()
 	r := mux.NewRouter()
 	//basic
