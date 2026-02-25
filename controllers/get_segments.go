@@ -29,6 +29,12 @@ func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
 	latitude := r.URL.Query().Get("lat")
 	longitude := r.URL.Query().Get("long")
 
+	if latitude == "" || longitude== ""{
+		var res Response
+		res.Message = "latitude or longitude query param is required"
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 	var closeSegments []CloseSegments
 	models.Db.Raw(`SELECT
             id,
