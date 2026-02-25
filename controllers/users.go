@@ -136,6 +136,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func CheckValidCookie(w http.ResponseWriter, r *http.Request) {
+func CheckValidJwt(w http.ResponseWriter, r *http.Request) {
 	return
 }

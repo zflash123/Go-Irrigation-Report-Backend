@@ -22,6 +22,7 @@ func Routes() {
 	//routes for normal users
 	user := r.PathPrefix("/api").Subrouter()
 	user.Use(middleware.VerifyJwtToken)
+	user.HandleFunc("/check-valid-cookie", controllers.CheckValidJwt).Methods("GET")
 	user.HandleFunc("/close-segments", controllers.GetCloseSegments).Methods("GET")
 	user.HandleFunc("/user/segments", controllers.GetSegmentsByUserId).Methods("GET")
 	user.HandleFunc("/user/report/{id}", controllers.GetReportById).Methods("GET")
