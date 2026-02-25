@@ -3,13 +3,13 @@ package routes
 import (
 	"go-irrigation-report-backend/controllers"
 	"go-irrigation-report-backend/models"
+	"go-irrigation-report-backend/config"
 	"log"
 	"net/http"
 
 	"go-irrigation-report-backend/middleware"
 
 	"github.com/gorilla/mux"
-	"github.com/rs/cors"
 )
 
 func Routes() {
@@ -29,6 +29,6 @@ func Routes() {
 	user.HandleFunc("/profile", controllers.GetUserProfile).Methods("GET")
 	user.HandleFunc("/profile", controllers.PutUserProfile).Methods("PUT")
 
-	handler := cors.Default().Handler(r)
+	handler := config.CorsObject.Handler(r)
 	log.Fatal(http.ListenAndServe(":8080", handler))
 }
