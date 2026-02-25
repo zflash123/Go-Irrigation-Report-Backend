@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"go-irrigation-report-backend/controllers"
 	"go-irrigation-report-backend/models"
 	"go-irrigation-report-backend/config"
@@ -30,5 +31,6 @@ func Routes() {
 	user.HandleFunc("/profile", controllers.PutUserProfile).Methods("PUT")
 
 	handler := config.CorsObject.Handler(r)
+	fmt.Println("HTTP server run on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", handler))
 }
