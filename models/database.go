@@ -9,6 +9,10 @@ import (
 	"gorm.io/gorm"
 )
 
+// Initialize Db Object
+var Db *gorm.DB
+var Err error
+
 func viperEnvConfig() {
 	viper.SetConfigFile(".env")
 	err := viper.ReadInConfig()

@@ -101,6 +101,3 @@ type ReportPhoto struct {
 func (ReportPhoto) TableName() string {
 	return "report.report_photo"
 }
-
-var Db *gorm.DB
-var Err error
