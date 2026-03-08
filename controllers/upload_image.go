@@ -24,8 +24,8 @@ func GenerateCryptoID() string {
 func UploadImage(image string) (uploadDumpID string, err error) {
 	parts := strings.Split(image, ";")
 	mimePart := strings.Split(parts[0], ":")
-	mime := mimePart[1]
-	imageExtension := strings.Split(mime, "/")[1]
+	imageExtension := (strings.Split(mimePart[1], "/"))[1]
+	
 	if(imageExtension=="go" || imageExtension=="svg"){
 		return "", fmt.Errorf("the extension is prohibited")
 	}
