@@ -73,29 +73,14 @@ func (ReportSegment) TableName() string {
 	return "report.report_segment"
 }
 
-type UploadDump struct {
-	ID					uuid.UUID			 `gorm:"type:uuid;default:gen_random_uuid()"`
-	Filename		string
-	FileType		string
-	Size				uint32
-	Folder			string
-	FileUrl			string
-	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
-	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
-}
-
-func (UploadDump) TableName() string {
-	return "file.upload_dump"
-}
-
 type ReportPhoto struct {
-	ID							uuid.UUID			 `gorm:"type:uuid;default:gen_random_uuid()"`
-	ReportSegmentID	string
-	UploadDumpID		string
-	CreatedAt 			time.Time			 `gorm:"autoCreateTime"`
-	UpdatedAt 			time.Time			 `gorm:"autoUpdateTime"`
-	ReportSegment		ReportSegment
-	UploadDump			UploadDump
+	ID        uuid.UUID `gorm:"type:uuid;default:gen_random_uuid()"`
+	Filename  string
+	FileType  string
+	Size      uint32
+	FileUrl   string
+	CreatedAt time.Time `gorm:"autoCreateTime"`
+	UpdatedAt time.Time `gorm:"autoUpdateTime"`
 }
 
 func (ReportPhoto) TableName() string {
