@@ -15,7 +15,7 @@ type Response struct {
 }
 
 type CredentialsData struct {
-	Email string
+	Email    string
 	Password string
 }
 
@@ -75,12 +75,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	var password = ""
 	var credentialsData CredentialsData
 	//If the req body use JSON data, then decode the JSON to an object
-	if(r.Header.Get("Content-Type") == "application/json"){
+	if r.Header.Get("Content-Type") == "application/json" {
 		json.NewDecoder(r.Body).Decode(&credentialsData)
 		email = credentialsData.Email
 		password = credentialsData.Password
-	//Else If the req body use x-www-form-urlencoded data, so it will parsed as form data
-	} else if(r.Header.Get("Content-Type") == "application/x-www-form-urlencoded") {
+		//Else If the req body use x-www-form-urlencoded data, so it will parsed as form data
+	} else if r.Header.Get("Content-Type") == "application/x-www-form-urlencoded" {
 		r.ParseForm()
 		email = r.Form["email"][0]
 		password = r.Form["password"][0]
@@ -89,7 +89,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 			Message string `json:"message"`
 		}
 		var res Response
-		
+
 		res.Message = "Content-Type not supported"
 		err := json.NewEncoder(w).Encode(res)
 		if err != nil {
@@ -97,7 +97,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		}
 		return
 	}
-
 
 	var users []models.User
 	userData := models.Db.Where("email = ?", email).First(&users)
@@ -108,7 +107,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Auth    string `json:"jwtToken"`
 	}
 	type Response struct {
-		Data		Data		`json:"data"`
+		Data Data `json:"data"`
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	var res Response
