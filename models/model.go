@@ -1,9 +1,11 @@
 package models
 
 import (
-	"gorm.io/gorm"
+	"encoding/json"
 	"time"
+
 	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 type UserRole struct {
@@ -57,6 +59,46 @@ type Report	struct {
 
 func (Report) TableName() string {
 	return "report.report_list"
+}
+
+type District struct {
+	gorm.Model
+}
+
+type SubDistrict struct {
+	gorm.Model
+}
+
+type Irrigation struct {
+	ID            uuid.UUID `gorm:"type:uuid;default:gen_random_uuid()"`
+	DistrictID    string
+	SubDistrictID string
+	Type          string
+	Length        string
+	Geom          string
+	CreatedAt     time.Time `gorm:"autoCreateTime"`
+	UpdatedAt     time.Time `gorm:"autoUpdateTime"`
+	District      District
+	SubDistrict   SubDistrict
+}
+
+type IrrigationSection struct {
+	gorm.Model
+}
+
+type IrrigationSegment struct {
+	ID                  uuid.UUID `gorm:"type:uuid;default:gen_random_uuid()"`
+	IrrigationID        string
+	IrrigationSectionID string
+	Name                string
+	Length              string
+	CenterPoint         string
+	CenterPointJson     json.RawMessage
+	geom                string
+	CreatedAt           time.Time `gorm:"autoCreateTime"`
+	UpdatedAt           time.Time `gorm:"autoUpdateTime"`
+	Irrigation          Irrigation
+	IrrigationSection   IrrigationSection
 }
 
 type ReportSegment struct {
