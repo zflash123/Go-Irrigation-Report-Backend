@@ -22,6 +22,7 @@ func GenerateCryptoID() string {
 }
 
 func UploadImage(image string) (uploadDumpID string, err error) {
+	// Get Image Extension from string of uploaded Image and then store it in variable imageExtension
 	parts := strings.Split(image, ";")
 	mimePart := strings.Split(parts[0], ":")
 	imageExtension := (strings.Split(mimePart[1], "/"))[1]
