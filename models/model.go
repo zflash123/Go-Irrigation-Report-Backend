@@ -102,13 +102,17 @@ type IrrigationSegment struct {
 }
 
 type ReportSegment struct {
-	ID					uuid.UUID			 `gorm:"type:uuid;default:gen_random_uuid()"`
-	ReportID		string
-	SegmentID		string
-	Level				string
-	Note				string
-	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
-	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
+	ID								uuid.UUID			 		`gorm:"type:uuid;default:gen_random_uuid()"`
+	ReportID          uuid.UUID
+	SegmentID         string
+	ReportPhotoID     string
+	Level							string
+	Note							string
+	CreatedAt 				time.Time			 		`gorm:"autoCreateTime"`
+	UpdatedAt 				time.Time			 		`gorm:"autoUpdateTime"`
+	Report            Report
+	IrrigationSegment IrrigationSegment `gorm:"foreignKey:SegmentID"`
+	ReportPhoto       ReportPhoto
 }
 
 func (ReportSegment) TableName() string {
