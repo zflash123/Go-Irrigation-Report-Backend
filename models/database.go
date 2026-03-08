@@ -32,7 +32,10 @@ func Db_connection() {
 		dbname   = viper.Get("DB_NAME")
 	)
 	dsn := fmt.Sprintf("host=%v port=%v user=%v dbname=%v sslmode=disable password=%v TimeZone=Asia/Jakarta", host, port, user, dbname, password)
-	Db, Err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	Db, Err = gorm.Open(postgres.Open(dsn), &gorm.Config{
+		PrepareStmt: true,
+	})
 
 	if Err != nil {
 		panic("failed to connect database")
