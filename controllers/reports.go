@@ -1,13 +1,16 @@
 package controllers
 
-import(
+import (
 	"encoding/json"
 	"fmt"
-	"net/http"
-	"time"
-	"math/rand"
 	"go-irrigation-report-backend/models"
 
+	"math/rand"
+	"net/http"
+	"strings"
+	"time"
+
+	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
 
@@ -24,7 +27,7 @@ type Reports struct {
 	Image           string `json:"image"`
 }
 
-func GetReportById(w http.ResponseWriter, r *http.Request){
+func GetReportById(w http.ResponseWriter, r *http.Request) {
 	report_id := mux.Vars(r)["id"]
 	var reports []Reports
 	queryReports := models.Db.Table("report.report_list").
@@ -39,13 +42,17 @@ func GetReportById(w http.ResponseWriter, r *http.Request){
 	if queryReports.Error != nil {
 		fmt.Printf("%v", queryReports.Error)
 	}
+	for i := 0; i < len(reports); i++ {
+		reports[i].CreatedAt = strings.Replace(reports[i].CreatedAt, "T", " ", 1)
+		reports[i].CreatedAt = strings.Replace(reports[i].CreatedAt, "Z", "", 1)
+	}
 	err := json.NewEncoder(w).Encode(reports)
 	if err != nil {
 		fmt.Printf("%v", err)
 	}
 }
 
-func GetReportByUserId(w http.ResponseWriter, r *http.Request){
+func GetReportByUserId(w http.ResponseWriter, r *http.Request) {
 	user_id := fmt.Sprintf("%v", r.Context().Value("user_id"))
 	filter := r.URL.Query().Get("filter")
 	search := r.URL.Query().Get("search")
@@ -115,6 +122,12 @@ func GetReportByUserId(w http.ResponseWriter, r *http.Request){
 	if queryReports.Error != nil {
 		fmt.Printf("%v", queryReports.Error)
 	}
+
+	for i := 0; i < len(reports); i++ {
+		reports[i].CreatedAt = strings.Replace(reports[i].CreatedAt, "T", " ", 1)
+		reports[i].CreatedAt = strings.Replace(reports[i].CreatedAt, "Z", "", 1)
+	}
+
 	err := json.NewEncoder(w).Encode(reports)
 	if err != nil {
 		fmt.Printf("%v", err)
