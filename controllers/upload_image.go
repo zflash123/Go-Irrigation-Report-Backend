@@ -1,14 +1,14 @@
 package controllers
 
-import(
-	"fmt"
-	"strings"
-	"regexp"
+import (
 	"crypto/rand"
-	"encoding/hex"
 	"encoding/base64"
-	"os"
+	"encoding/hex"
+	"fmt"
 	"go-irrigation-report-backend/models"
+	"os"
+	"regexp"
+	"strings"
 )
 
 func GenerateCryptoID() string {
@@ -21,7 +21,7 @@ func GenerateCryptoID() string {
 	return result
 }
 
-func UploadImage(image string) (uploadDumpID string, err error) {
+func UploadImage(image string) (reportPhotoID string, err error) {
 	// Get Image Extension from string of uploaded Image and then store it in variable imageExtension
 	parts := strings.Split(image, ";")
 	mimePart := strings.Split(parts[0], ":")
@@ -52,19 +52,18 @@ func UploadImage(image string) (uploadDumpID string, err error) {
 	}
 	fileStat, _ := destination.Stat()
 	fileSize := fileStat.Size()
-	var uploadDump = models.UploadDump{
+	var reportPhoto = models.ReportPhoto{
 		Filename: imageName,
 		FileType: imageExtension,
 		Size: uint32(fileSize),
-		Folder: "root",
 		FileUrl: fileUrl,
 	}
-	models.Db.Create(&uploadDump)
-	uploadDumpID = fmt.Sprintf("%s", uploadDump.ID)
+	models.Db.Create(&reportPhoto)
+	reportPhotoID = fmt.Sprintf("%s", reportPhoto.ID)
 	destination.Close()
 	err = os.Remove(imagePath)
 	if err!=nil {
 		fmt.Println("Err: ", err)
 	}
-	return uploadDumpID, nil
+	return reportPhotoID, nil
 }
