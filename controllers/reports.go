@@ -12,16 +12,16 @@ import(
 )
 
 type Reports struct {
-	Id									string
-	CreatedAt						string
-	DoneAt							string
-	Level								string
-	Note								string
-	Status							string
-	CenterPointJson			string
-	IrrigationName			string
-	Canal								string
-	Image								string
+	Id              string `json:"id"`
+	CreatedAt       string `json:"created_at"`
+	DoneAt          string `json:"done_at"`
+	Level           string `json:"level"`
+	Note            string `json:"note"`
+	Status          string `json:"status"`
+	CenterPointJson string `json:"center_point_json"`
+	IrrigationName  string `json:"irrigation_name"`
+	Canal           string `json:"canal"`
+	Image           string `json:"image"`
 }
 
 func GetReportById(w http.ResponseWriter, r *http.Request){
