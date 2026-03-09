@@ -28,7 +28,6 @@ func CreateReportContentTypeHandler(w http.ResponseWriter, r *http.Request) (rep
 		if err != nil {
 			log.Fatalln("Something went wrong when ParseForm:\n", err)
 		}
-		log.Println("len(r.PostForm): ", len(r.PostForm))
 
 		//Check All Required Value of Each Key
 		if totalKeysPostForm < 4 {
