@@ -98,9 +98,18 @@ func GetReportByUserId(w http.ResponseWriter, r *http.Request){
 	}
 }
 
-func CreateReport(w http.ResponseWriter, r *http.Request){
-	w.Header().Set("Content-Type", "application/json; charset=utf-8")
-	r.ParseForm()
+func CreateReport(w http.ResponseWriter, r *http.Request) {
+	//Struct to Create HTTP Response
+	type Response struct {
+		Message string `json:"message"`
+	}
+	
+	var reportSegments = CreateReportContentTypeHandler(w, r)
+
+	if reportSegments == nil{
+		return
+	}
+
 	year, month, day := time.Now().Date()
 	strYear := fmt.Sprintf("%v", year)
 	shortYear := strYear[2:4]
