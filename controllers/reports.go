@@ -52,41 +52,63 @@ func GetReportByUserId(w http.ResponseWriter, r *http.Request){
 
 	var reports []Reports
 	var queryReports = models.Db
-	if(filter != "" && search != ""){
-		queryReports = models.Db.Table("report.report_list").
-		Select("DISTINCT ON (report.report_list.id) report.report_list.id", "report.report_list.created_at", "report.report_list.done_at", "report.status.name as status", "map.irrigations.name as irrigation_name", "map.irrigations.type as canal").
-		Joins("JOIN report.status ON report.status.id = report.report_list.status_id").
-		Joins("JOIN report.report_segment ON report.report_segment.report_id = report.report_list.id").
-		Joins("JOIN map.irrigations_segment ON map.irrigations_segment.id = report.report_segment.segment_id").
-		Joins("JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id").
-		Where("report.report_list.user_id = ? AND report.status.name = ? AND map.irrigations.name = ?", user_id, filter, search).
-		Scan(&reports)
-	} else if filter != ""{
-		queryReports = models.Db.Table("report.report_list").
-		Select("DISTINCT ON (report.report_list.id) report.report_list.id", "report.report_list.created_at", "report.report_list.done_at", "report.status.name as status", "map.irrigations.name as irrigation_name", "map.irrigations.type as canal").
-		Joins("JOIN report.status ON report.status.id = report.report_list.status_id").
-		Joins("JOIN report.report_segment ON report.report_segment.report_id = report.report_list.id").
-		Joins("JOIN map.irrigations_segment ON map.irrigations_segment.id = report.report_segment.segment_id").
-		Joins("JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id").
-		Where("report.report_list.user_id = ? AND report.status.name = ?", user_id, filter).
-		Scan(&reports)
-	} else if search != ""{
-		queryReports = models.Db.Table("report.report_list").
-		Select("DISTINCT ON (report.report_list.id) report.report_list.id", "report.report_list.created_at", "report.report_list.done_at", "report.status.name as status", "map.irrigations.name as irrigation_name", "map.irrigations.type as canal").
-		Joins("JOIN report.status ON report.status.id = report.report_list.status_id").
-		Joins("JOIN report.report_segment ON report.report_segment.report_id = report.report_list.id").
-		Joins("JOIN map.irrigations_segment ON map.irrigations_segment.id = report.report_segment.segment_id").
-		Joins("JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id").
-		Where("report.report_list.user_id = ? AND map.irrigations.name LIKE %?%", user_id, search).
-		Scan(&reports)
+	if filter != "" && search != "" {
+		models.Db.Raw(`SELECT * FROM(
+			Select DISTINCT ON (report.report_segment.id) report.report_list.id, report.report_list.created_at, report.report_list.done_at, report.status.name as status, map.irrigations.name as irrigation_name, map.irrigations.type as canal, map.irrigations_segment.center_point_json, report.report_segment.level, report.report_segment.note, report.report_photo.file_url as image
+			FROM report.report_list	
+			JOIN report.status ON report.status.id = report.report_list.status_id
+			JOIN report.report_segment ON report.report_segment.report_id = report.report_list.id
+			JOIN map.irrigations_segment ON map.irrigations_segment.id = report.report_segment.segment_id
+			JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id
+			JOIN report.report_photo ON report.report_photo.id = report.report_segment.report_photo_id 
+			WHERE report.report_list.user_id = ? AND report.status.name = ? AND map.irrigations.name LIKE ?
+			ORDER BY report.report_segment.id, report.report_list.created_at DESC
+		)
+		ORDER BY created_at DESC`, user_id, filter, search).
+			Scan(&reports)
+	} else if filter != "" {
+		models.Db.Raw(`SELECT * FROM(
+			Select DISTINCT ON (report.report_segment.id) report.report_list.id, report.report_list.created_at, report.report_list.done_at, report.status.name as status, map.irrigations.name as irrigation_name, map.irrigations.type as canal, map.irrigations_segment.center_point_json, report.report_segment.level, report.report_segment.note, report.report_photo.file_url as image
+			FROM report.report_list	
+			JOIN report.status ON report.status.id = report.report_list.status_id
+			JOIN report.report_segment ON report.report_segment.report_id = report.report_list.id
+			JOIN map.irrigations_segment ON map.irrigations_segment.id = report.report_segment.segment_id
+			JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id
+			JOIN report.report_photo ON report.report_photo.id = report.report_segment.report_photo_id 
+			WHERE report.report_list.user_id = ? AND report.status.name = ?
+			ORDER BY report.report_segment.id, report.report_list.created_at DESC
+		)
+		ORDER BY created_at DESC`, user_id, filter).
+			Scan(&reports)
+
+	} else if search != "" {
+		models.Db.Raw(`SELECT * FROM(
+			Select DISTINCT ON (report.report_segment.id) report.report_list.id, report.report_list.created_at, report.report_list.done_at, report.status.name as status, map.irrigations.name as irrigation_name, map.irrigations.type as canal, map.irrigations_segment.center_point_json, report.report_segment.level, report.report_segment.note, report.report_photo.file_url as image
+			FROM report.report_list	
+			JOIN report.status ON report.status.id = report.report_list.status_id
+			JOIN report.report_segment ON report.report_segment.report_id = report.report_list.id
+			JOIN map.irrigations_segment ON map.irrigations_segment.id = report.report_segment.segment_id
+			JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id
+			JOIN report.report_photo ON report.report_photo.id = report.report_segment.report_photo_id 
+			WHERE report.report_list.user_id = ? AND map.irrigations.name LIKE ?
+			ORDER BY report.report_segment.id, report.report_list.created_at DESC
+		)
+		ORDER BY created_at DESC`, user_id, search).
+			Scan(&reports)
 	} else {
-		queryReports = models.Db.Table("report.report_list").
-		Select("DISTINCT ON (report.report_list.id) report.report_list.id", "report.report_list.created_at", "report.report_list.done_at", "report.status.name as status", "map.irrigations.name as irrigation_name", "map.irrigations.type as canal").
-		Joins("JOIN report.status ON report.status.id = report.report_list.status_id").
-		Joins("JOIN report.report_segment ON report.report_segment.report_id = report.report_list.id").
-		Joins("JOIN map.irrigations_segment ON map.irrigations_segment.id = report.report_segment.segment_id").
-		Joins("JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id").
-		Where("report.report_list.user_id = ?", user_id).Scan(&reports)
+		queryReports = models.Db.Raw(`SELECT * FROM(
+			Select DISTINCT ON (report.report_segment.id) report.report_list.id, report.report_list.created_at, report.report_list.done_at, report.status.name as status, map.irrigations.name as irrigation_name, map.irrigations.type as canal, report.report_segment.level, report.report_segment.note, report.report_photo.file_url as image
+			FROM report.report_list	
+			JOIN report.status ON report.status.id = report.report_list.status_id
+			JOIN report.report_segment ON report.report_segment.report_id = report.report_list.id
+			JOIN map.irrigations_segment ON map.irrigations_segment.id = report.report_segment.segment_id
+			JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id
+			JOIN report.report_photo ON report.report_photo.id = report.report_segment.report_photo_id
+			WHERE report.report_list.user_id = ?
+			ORDER BY report.report_segment.id, report.report_list.created_at DESC
+		)
+		ORDER BY created_at DESC`, user_id).
+			Scan(&reports)
 	}
 
 	if queryReports.Error != nil {
