@@ -115,16 +115,11 @@ func CreateReport(w http.ResponseWriter, r *http.Request){
 		TicketNo: ticket_no,
 	}
 	models.Db.Create(&report)
-	report_id := fmt.Sprintf("%v", report.ID)
-	var reportSegment = models.ReportSegment{
-		ReportID: report_id,
-		SegmentID: r.Form["segment_id1"][0],
-		Level: r.Form["level1"][0],
-		Note: r.Form["note1"][0],
-	}
-	models.Db.Create(&reportSegment)
-	report_segment_id := fmt.Sprintf("%v", reportSegment.ID)
-	uploadDumpID, err :=UploadImage(r.Form["image1"][0])
+	var report_id uuid.UUID
+	report_id = report.ID
+	// Set Response Content-Type to application/json
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	// Set res as object from Response struct
 	var res Response
 
 	// Create/Insert All Report Segment that is send using loop, to DB
