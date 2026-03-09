@@ -123,6 +123,16 @@ func GetReportByUserId(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("%v", queryReports.Error)
 	}
 
+	if reports == nil {
+		var res_body = make([]reportSegment, 0)
+		w.WriteHeader(http.StatusNotFound)
+		err := json.NewEncoder(w).Encode(res_body)
+		if err != nil {
+			fmt.Printf("%v", err)
+		}
+		return
+	}
+
 	for i := 0; i < len(reports); i++ {
 		reports[i].CreatedAt = strings.Replace(reports[i].CreatedAt, "T", " ", 1)
 		reports[i].CreatedAt = strings.Replace(reports[i].CreatedAt, "Z", "", 1)
