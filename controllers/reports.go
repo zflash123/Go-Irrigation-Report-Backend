@@ -49,6 +49,7 @@ func GetReportByUserId(w http.ResponseWriter, r *http.Request){
 	user_id := fmt.Sprintf("%v", r.Context().Value("user_id"))
 	filter := r.URL.Query().Get("filter")
 	search := r.URL.Query().Get("search")
+	search = "%"+search+"%"
 
 	var reports []Reports
 	var queryReports = models.Db
