@@ -35,6 +35,7 @@ func Db_connection() {
 
 	Db, Err = gorm.Open(postgres.Open(dsn), &gorm.Config{
 		PrepareStmt: true,
+		SkipDefaultTransaction: true,
 	})
 
 	if Err != nil {
