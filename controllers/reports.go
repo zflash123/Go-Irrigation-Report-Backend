@@ -69,7 +69,7 @@ func GetReportByUserId(w http.ResponseWriter, r *http.Request) {
 			JOIN map.irrigations_segment ON map.irrigations_segment.id = report.report_segment.segment_id
 			JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id
 			JOIN report.report_photo ON report.report_photo.id = report.report_segment.report_photo_id 
-			WHERE report.report_list.user_id = ? AND report.status.name = ? AND map.irrigations.name LIKE ?
+			WHERE report.report_list.user_id = ? AND report.status.name = ? AND LOWER(map.irrigations.name) LIKE ?
 			ORDER BY report.report_segment.id, report.report_list.created_at DESC
 		)
 		ORDER BY created_at DESC`, user_id, filter, search).
@@ -98,7 +98,7 @@ func GetReportByUserId(w http.ResponseWriter, r *http.Request) {
 			JOIN map.irrigations_segment ON map.irrigations_segment.id = report.report_segment.segment_id
 			JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id
 			JOIN report.report_photo ON report.report_photo.id = report.report_segment.report_photo_id 
-			WHERE report.report_list.user_id = ? AND map.irrigations.name LIKE ?
+			WHERE report.report_list.user_id = ? AND LOWER(map.irrigations.name) LIKE ?
 			ORDER BY report.report_segment.id, report.report_list.created_at DESC
 		)
 		ORDER BY created_at DESC`, user_id, search).
