@@ -59,17 +59,18 @@ func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetSegmentsByUserId(w http.ResponseWriter, r *http.Request) {
+	latitude := r.URL.Query().Get("lat")
+	longitude := r.URL.Query().Get("long")
 	user_id := fmt.Sprintf("%v", r.Context().Value("user_id"))
 
 	var segments []Segment
-	query := models.Db.Table("report.report_list").Select("report.status.name as status", "report.report_segment.segment_id", "report.report_segment.level", "map.irrigations_segment.geojson", "map.irrigations.name as irrigation_name", "map.irrigations.type as canal", "file.upload_dump.file_url as image").
+	query := models.Db.Table("report.report_list").Select("report.status.name as status", "report.report_segment.segment_id", "report.report_segment.level", "map.irrigations_segment.geojson", "map.irrigations.name as irrigation_name", "map.irrigations.type as canal", "report.report_photo.file_url as image").
 		Joins("JOIN report.status ON report.status.id = report.report_list.status_id").
 		Joins("JOIN report.report_segment ON report.report_segment.report_id = report.report_list.id").
-		Joins("JOIN report.report_photo ON report.report_photo.report_segment_id = report.report_segment.id").
-		Joins("JOIN file.upload_dump ON file.upload_dump.id = report.report_photo.upload_dump_id").
+		Joins("JOIN report.report_photo ON report.report_photo.id = report.report_segment.report_photo_id").
 		Joins("JOIN map.irrigations_segment ON map.irrigations_segment.id = report.report_segment.segment_id").
 		Joins("JOIN map.irrigations ON map.irrigations.id = map.irrigations_segment.irrigation_id").
-		Where("report.report_list.user_id = ?", user_id).Scan(&segments)
+		Where("report.report_list.user_id = ? AND public.ST_Distance(map.irrigations_segment.geom, public.geography(public.ST_SetSRID(public.ST_MakePoint(?, ?), 4326)))<=700", user_id, longitude, latitude).Scan(&segments)
 
 	if query.Error != nil {
 		var res Response
