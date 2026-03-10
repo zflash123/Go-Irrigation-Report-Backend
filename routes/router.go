@@ -25,7 +25,7 @@ func Routes() {
 	user.Use(middleware.VerifyJwtToken)
 	user.HandleFunc("/check-valid-cookie", controllers.CheckValidJwt).Methods("GET")
 	user.HandleFunc("/close-segments", controllers.GetCloseSegments).Methods("GET")
-	user.HandleFunc("/user/segments", controllers.GetSegmentsByUserId).Methods("GET")
+	user.HandleFunc("/segments-by-user-id", controllers.GetSegmentsByUserId).Methods("GET")
 	user.HandleFunc("/report/{id}", controllers.GetReportById).Methods("GET")
 	user.HandleFunc("/user-reports", controllers.GetReportByUserId).Methods("GET")
 	user.HandleFunc("/report", controllers.CreateReport).Methods("POST")
