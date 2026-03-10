@@ -81,6 +81,16 @@ func GetSegmentsByUserId(w http.ResponseWriter, r *http.Request) {
 			fmt.Printf("%v", err)
 		}
 	}
+
+	if segments == nil {
+		var res Response
+		res.Message = "There is no reported segments in radius of 700 meters from your current location."
+		w.WriteHeader(http.StatusNotFound)
+		err := json.NewEncoder(w).Encode(res)
+		if err != nil {
+			fmt.Printf("%v", err)
+		}
+	}
 	err := json.NewEncoder(w).Encode(segments)
 	if err != nil {
 		fmt.Printf("%v", err)
