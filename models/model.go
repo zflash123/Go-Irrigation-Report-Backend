@@ -18,17 +18,17 @@ func (UserRole) TableName() string {
 }
 
 type User struct {
-	ID					uuid.UUID			 `gorm:"type:uuid;default:gen_random_uuid()"`
-	UserRoleID 	string
-	Email				string
-	Password		string
-	Username		string
-	FirstName		string
-	LastName		string
-	Avatar			string
-	CreatedAt 	time.Time			 `gorm:"autoCreateTime"`
-	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime"`
-	UserRole		UserRole
+	ID					uuid.UUID			 `gorm:"type:uuid;default:gen_random_uuid()" json:"id"`
+	UserRoleID 	string				 `json:"user_role_id"`
+	Email				string				 `json:"email"`
+	Password		string				 `json:"password"`
+	Username		string				 `json:"username"`
+	FirstName		string				 `json:"first_name"`
+	LastName		string				 `json:"last_name"`
+	Avatar			string				 `json:"avatar"`
+	CreatedAt 	time.Time			 `gorm:"autoCreateTime" json:"created_at"`
+	UpdatedAt 	time.Time			 `gorm:"autoUpdateTime" json:"updated_at"`
+	UserRole		UserRole				
 }
 
 func (User) TableName() string {
