@@ -29,8 +29,8 @@ func Routes() {
 	user.HandleFunc("/report/{id}", controllers.GetReportById).Methods("GET")
 	user.HandleFunc("/user-reports", controllers.GetReportByUserId).Methods("GET")
 	user.HandleFunc("/report", controllers.CreateReport).Methods("POST")
-	user.HandleFunc("/user/profile", controllers.GetUserProfile).Methods("GET")
-	user.HandleFunc("/user/profile", controllers.PutUserProfile).Methods("PUT")
+	user.HandleFunc("/profile", controllers.GetUserProfile).Methods("GET")
+	user.HandleFunc("/profile", controllers.PutUserProfile).Methods("PUT")
 
 	handler := config.CorsObject.Handler(r)
 	fmt.Println("HTTP server run on port 8080")
