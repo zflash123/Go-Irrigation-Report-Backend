@@ -52,6 +52,7 @@ func UploadImage(image string) (reportPhotoID string, err error) {
 	}
 	fileStat, _ := destination.Stat()
 	fileSize := fileStat.Size()
+	destination.Close()
 	var reportPhoto = models.ReportPhoto{
 		Filename: imageName,
 		FileType: imageExtension,
@@ -60,7 +61,6 @@ func UploadImage(image string) (reportPhotoID string, err error) {
 	}
 	models.Db.Create(&reportPhoto)
 	reportPhotoID = fmt.Sprintf("%s", reportPhoto.ID)
-	destination.Close()
 	err = os.Remove(imagePath)
 	if err!=nil {
 		fmt.Println("Err: ", err)
