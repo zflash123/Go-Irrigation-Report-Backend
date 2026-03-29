@@ -34,7 +34,7 @@ func GetUserProfile(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func PutUserProfile(w http.ResponseWriter, r *http.Request) {
+func UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
 	user_id := fmt.Sprintf("%v", r.Context().Value("user_id"))
 	var user models.User
 	user.ID, _ = uuid.Parse(user_id)
