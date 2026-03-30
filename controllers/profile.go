@@ -69,8 +69,7 @@ func UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
 			Avatar:  avatar,
 		})
 		if query.Error != nil {
-			var res Response
-			res.Message = "There is an error when executing the query."
+			res.Message = "There is an error when executing the Update Profile Query."
 			w.WriteHeader(http.StatusInternalServerError)
 			err := json.NewEncoder(w).Encode(res)
 			if err != nil {
