@@ -38,11 +38,35 @@ func UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
 	user_id := fmt.Sprintf("%v", r.Context().Value("user_id"))
 	var user models.User
 	user.ID, _ = uuid.Parse(user_id)
-	r.ParseForm()
-	if r.Form["image"][0] == "" {
+	
+	//Parse "application/json"
+	type ProfileFormData struct {
+		Firstname string `json:"firstname"`
+		Lastname string `json:"lastname"`
+		Image string `json:"image"`
+	}
+	var profileFormData ProfileFormData
+	json.NewDecoder(r.Body).Decode(&profileFormData)
+	//Else If the req body use x-www-form-urlencoded data, so it will parsed as form data
+
+	var isImageFieldInFormFilled = false
+	//Image Input Data Value Check
+	if profileFormData.Image != "" {
+		isImageFieldInFormFilled = true
+	}
+	//Creating response Object
+	var res Response
+	// Executing Query for the given condition
+	if(isImageFieldInFormFilled == true) {
+		log.Println("lastname: "+profileFormData.Lastname)
+		avatar, imagePath, err := UploadImageForProfile(profileFormData.Image)
+		if err != nil {
+			log.Println("Error di UploadImageForProfile")
+		}
 		query := models.Db.Model(&user).Updates(models.User{
-			FirstName: r.Form["firstname"][0],
-			LastName:  r.Form["lastname"][0],
+			FirstName: profileFormData.Firstname,
+			LastName:  profileFormData.Lastname,
+			Avatar:  avatar,
 		})
 		if query.Error != nil {
 			var res Response
