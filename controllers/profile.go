@@ -94,9 +94,4 @@ func UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	w.WriteHeader(http.StatusOK)
-	err := json.NewEncoder(w).Encode(user)
-	if err != nil {
-		fmt.Printf("%v", err)
-	}
 }
