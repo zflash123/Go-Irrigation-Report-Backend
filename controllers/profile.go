@@ -54,29 +54,20 @@ func UpdateUserProfile(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	} else {
-		var uploadDump UploadDump
-		uploadDumpID, err := UploadImage(r.Form["image"][0])
-		if err != nil {
-			fmt.Println(err)
-		}
-		query := models.Db.Table("file.upload_dump").Select("file.upload_dump.file_url").
-			Where("file.upload_dump.id = ?", uploadDumpID).Scan(&uploadDump)
-
-		if query.Error == nil {
-			query = models.Db.Model(&user).Updates(models.User{
-				FirstName: r.Form["firstname"][0],
-				LastName:  r.Form["lastname"][0],
-				Avatar:    uploadDump.FileUrl,
-			})
-		}
+		query := models.Db.Model(&user).Updates(models.User{
+			FirstName: profileFormData.Firstname,
+			LastName:  profileFormData.Lastname,
+		})
 		if query.Error != nil {
 			var res Response
-			res.Message = "There is an error when executing the query."
+			res.Message = "There is an error when executing the Update Profile Query."
 			w.WriteHeader(http.StatusInternalServerError)
 			err := json.NewEncoder(w).Encode(res)
 			if err != nil {
 				fmt.Printf("%v", err)
+				return
 			}
+			return
 		}
 	}
 	w.WriteHeader(http.StatusOK)
