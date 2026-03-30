@@ -9,7 +9,7 @@ import (
 	"github.com/google/uuid"
 )
 
-type UploadDump struct {
+type ReportPhoto struct {
 	FileUrl string
 }
 
