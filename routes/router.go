@@ -32,7 +32,7 @@ func Routes() {
 	user.HandleFunc("/profile", controllers.GetUserProfile).Methods("GET")
 	user.HandleFunc("/profile", controllers.UpdateUserProfile).Methods("PUT")
 
-	handler := config.CorsObject.Handler(r)
+	corsHandler := config.CorsObject.Handler(r)
 	fmt.Println("HTTP server run on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", handler))
+	log.Fatal(http.ListenAndServe("127.0.0.1:8080", middleware.GlobalDosPreventer(corsHandler)))
 }
