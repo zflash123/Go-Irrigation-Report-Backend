@@ -12,11 +12,11 @@ import (
 	"github.com/spf13/viper"
 )
 
-func VerifyJwtToken(next http.Handler) http.Handler {
-	type Response struct {
-		Message string `json:"message"`
-	}
+type Response struct {
+	Message string `json:"message"`
+}
 
+func VerifyJwtToken(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var res Response
 
