@@ -44,9 +44,11 @@ func UploadImage(image string) (reportPhotoID string, err error) {
 	var decodedImg []byte
 	decodedImg, _ = base64.StdEncoding.DecodeString(image)
 	strDecodedImg := string(decodedImg)
+	//Create new file with path imagePath that return the os.File that can be modified
 	destination, _ := os.Create(imagePath)
 
 	fmt.Fprintf(destination, "%s", strDecodedImg)
+	err = ShrinkImage(imagePath, "340x")
 	fileUrl, errUploadToFB := UploadToFirebase(imagePath, imageName)
 	if errUploadToFB!=nil {
 		return "", errUploadToFB
@@ -90,10 +92,13 @@ func UploadImageForProfile(image string) (avatar string, imagePath string, err e
 	imagePath = fmt.Sprintf("%v/images/%v", wd, imageName)
 	var decodedImg []byte
 	decodedImg, _ = base64.StdEncoding.DecodeString(image)
+
 	strDecodedImg := string(decodedImg)
 	destination, _ := os.Create(imagePath)
-
+	
 	fmt.Fprintf(destination, "%s", strDecodedImg)
+	err = ShrinkImage(imagePath, "112x")
+	
 	avatar, errUploadToFB := UploadToFirebase(imagePath, imageName)
 	log.Println("Profile Image Uploaded to Firebase")
 	if errUploadToFB!=nil {
