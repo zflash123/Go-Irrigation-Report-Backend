@@ -28,11 +28,14 @@ func GlobalDosPreventer(next http.Handler) http.Handler {
 		var err error
 		_, err = io.ReadFull(newRBody, dataRBody)
 		r.Body = io.NopCloser(bytes.NewBuffer(dataRBody))
-		log.Println("Err inside if ct x-www-form= ",err)
 			//Handling if error is true
 		if err == io.ErrUnexpectedEOF{
 			http.Error(w, "Error: DoS Prevented", 413)
 			return
+		} else if err != nil{
+			http.Error(w, "Error lainnya ketika preventing DoS", 500)
+			log.Println("Other Error when Preventing DoS: ", err)
+			return 
 		}
 		// If there is no error then continue the serve of HTTP with r and w
 		next.ServeHTTP(w, r)
