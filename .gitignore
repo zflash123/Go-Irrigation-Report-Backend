@@ -1,3 +1,4 @@
 .env
 firebase-storage-credentials.json
 /images/*
+!/images/.gitkeep
