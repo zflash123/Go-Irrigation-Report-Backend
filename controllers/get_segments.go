@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"go-irrigation-report-backend/helperfunctions"
 	"go-irrigation-report-backend/models"
 	"net/http"
 
@@ -62,7 +63,16 @@ func GetSegmentsByUserId(w http.ResponseWriter, r *http.Request) {
 	latitude := r.URL.Query().Get("lat")
 	longitude := r.URL.Query().Get("long")
 	user_id := fmt.Sprintf("%v", r.Context().Value("user_id"))
-
+	//Check for required parameters
+	isLatitudeEmpty := helperfunctions.MakeRequiredParameterTypeString(latitude, "latitude", w)
+	if isLatitudeEmpty == true {
+		return
+	}
+	isLongitudeEmpty := helperfunctions.MakeRequiredParameterTypeString(latitude, "latitude", w)
+	if isLongitudeEmpty == true {
+		return
+	}
+	//Check Finished
 	var segments []Segment
 	query := models.Db.Table("report.report_list").Select("report.status.name as status", "report.report_segment.segment_id", "report.report_segment.level", "map.irrigations_segment.geojson", "map.irrigations.name as irrigation_name", "map.irrigations.type as canal", "report.report_photo.file_url as image").
 		Joins("JOIN report.status ON report.status.id = report.report_list.status_id").
