@@ -48,8 +48,11 @@ func UploadImage(image string) (reportPhotoID string, err error) {
 	destination, _ := os.Create(imagePath)
 
 	fmt.Fprintf(destination, "%s", strDecodedImg)
+	log.Println("Image created in local")
 	err = ShrinkImage(imagePath, "340x")
+	log.Println("Profile Image Shrinked")
 	fileUrl, errUploadToFB := UploadToFirebase(imagePath, imageName)
+	log.Println("Profile Image Uploaded to Firebase")
 	if errUploadToFB!=nil {
 		return "", errUploadToFB
 	}
@@ -97,8 +100,9 @@ func UploadImageForProfile(image string) (avatar string, imagePath string, err e
 	destination, _ := os.Create(imagePath)
 	
 	fmt.Fprintf(destination, "%s", strDecodedImg)
+	log.Println("Image created in local")
 	err = ShrinkImage(imagePath, "112x")
-	
+	log.Println("Profile Image Shrinked")
 	avatar, errUploadToFB := UploadToFirebase(imagePath, imageName)
 	log.Println("Profile Image Uploaded to Firebase")
 	if errUploadToFB!=nil {
