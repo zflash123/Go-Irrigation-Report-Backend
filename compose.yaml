@@ -6,7 +6,9 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-  postgres:
+        restart: true
+    image: ${GO_IMAGE_NAME}
+  db:
     build:
       dockerfile: postgres.Dockerfile
     ports:
@@ -20,3 +22,4 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+    image: ${DB_IMAGE_NAME}
