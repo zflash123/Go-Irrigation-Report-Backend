@@ -7,12 +7,16 @@ ARG DB_PORT
 ARG DB_USER
 ARG DB_PWD
 ARG DB_NAME
+ARG GCS_BUCKET
+ARG JWT_KEY
 
 RUN echo 'DB_HOST="'$DB_HOST'"' >> .env
 RUN echo 'DB_PORT="'$DB_PORT'"' >> .env
 RUN echo 'DB_USER="'$DB_USER'"' >> .env
 RUN echo 'DB_PWD="'$DB_PWD'"' >> .env
 RUN echo 'DB_NAME="'$DB_NAME'"' >> .env
+RUN echo 'GCS_BUCKET="'$GCS_BUCKET'"' >> .env
+RUN echo 'JWT_KEY="'$JWT_KEY'"' >> .env
 
 COPY go.mod go.sum ./
 
