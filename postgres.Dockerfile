@@ -6,8 +6,8 @@ ARG DB_NAME
 
 ENV POSTGRES_USER=${DB_USER}
 ENV POSTGRES_PASSWORD=${DB_PWD}
-ENV POSTGRES_NAME=${DB_NAME}
-
-EXPOSE 5432
+ENV POSTGRES_DB=${DB_NAME}
 
 ADD ./07-04-2026_postgresql-db-sql-backup-03.sql /docker-entrypoint-initdb.d/db-backup.sql
+
+EXPOSE 5432
