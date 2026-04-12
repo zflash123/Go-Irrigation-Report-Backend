@@ -1,0 +1,73 @@
+steps:
+  - name: gcr.io/cloud-builders/gsutil
+    args:
+      - cp
+      - >-
+        gs://YOUR_GOOGLE_STORAGE_NAME.appspot.com/postgresql-db-sql-backup.sql
+      - .
+    waitFor:
+      - '-'
+  - name: gcr.io/cloud-builders/docker
+    env:
+      - DB_NAME=$_DB_NAME
+      - DB_USER=$_DB_USER
+      - DB_PWD=$_DB_PWD
+    args:
+      - build
+      - '--no-cache'
+      - '-t'
+      - >-
+        $_AR_HOSTNAME/$_AR_PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA
+      - '--build-arg'
+      - DB_USER
+      - '--build-arg'
+      - DB_PWD
+      - '--build-arg'
+      - DB_NAME
+      - '-f'
+      - postgres.Dockerfile
+      - .
+    id: Build
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - >-
+        $_AR_HOSTNAME/$_AR_PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA
+    id: Push
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    args:
+      - run
+      - services
+      - update
+      - $_SERVICE_NAME
+      - '--platform=managed'
+      - >-
+        --image=$_AR_HOSTNAME/$_AR_PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA
+      - >-
+        --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID,gcb-trigger-id=$_TRIGGER_ID
+      - '--region=$_DEPLOY_REGION'
+      - '--quiet'
+    id: Deploy
+    entrypoint: gcloud
+images:
+  - >-
+    $_AR_HOSTNAME/$_AR_PROJECT_ID/$_AR_REPOSITORY/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA
+options:
+  substitutionOption: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _AR_REPOSITORY: cloud-run-source-deploy
+  _DB_USER: YOUR_DB_USER_NAME
+  _SERVICE_NAME: YOUR_SERVICE_REPO_NAME
+  _AR_PROJECT_ID: YOUR_GCP_PROJECT_ID
+  _DB_PWD: YOUR_DB_PASSWORD
+  REPO_NAME: YOUR_GIT_REPO_NAME
+  _AR_HOSTNAME: asia-southeast3-docker.pkg.dev
+  _DEPLOY_REGION: asia-southeast3
+  _DB_NAME: YOUR_DB_NAME
+  _TRIGGER_ID: YOUR_AUTO_GENERATED_TRIGGER_ID
+  _PLATFORM: managed
+tags:
+  - gcp-cloud-build-deploy-cloud-run
+  - gcp-cloud-build-deploy-cloud-run-managed
+  - go-irrigation-report-postgres
