@@ -36,5 +36,5 @@ func Routes() {
 
 	corsHandler := config.CorsObject.Handler(r)
 	fmt.Println("HTTP server run on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", middleware.GlobalDosPreventer(corsHandler)))
+	log.Println(http.ListenAndServe("0.0.0.0:8080", middleware.GlobalDosPreventer(corsHandler)))
 }
