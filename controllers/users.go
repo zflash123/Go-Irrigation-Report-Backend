@@ -138,3 +138,10 @@ func Login(w http.ResponseWriter, r *http.Request) {
 func CheckValidJwt(w http.ResponseWriter, r *http.Request) {
 	return
 }
+
+func HealthCheck(w http.ResponseWriter, r *http.Request) {
+	var res Response
+	res.Message = "Server status is Healty"
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(res)
+}

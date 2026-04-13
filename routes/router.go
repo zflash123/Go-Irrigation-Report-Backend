@@ -17,6 +17,8 @@ func Routes() {
 	config.ViperEnvConfig()
 	models.Db_connection()
 	r := mux.NewRouter()
+	//health-check-cloud-run
+	r.HandleFunc("/api/health-check", controllers.HealthCheck).Methods("GET")
 	//basic
 	r.HandleFunc("/api/auth/register", controllers.Register).Methods("POST")
 	r.HandleFunc("/api/auth/login", controllers.Login).Methods("POST")
