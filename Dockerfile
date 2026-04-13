@@ -24,8 +24,8 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /gobinary
+RUN go build -o gobinary
 
 EXPOSE 8080
 
-CMD ["/gobinary"]
+ENTRYPOINT ["/usr/src/app/gobinary"]
