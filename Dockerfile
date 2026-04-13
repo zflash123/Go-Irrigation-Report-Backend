@@ -26,6 +26,4 @@ COPY . .
 
 RUN go build -o gobinary
 
-EXPOSE 8080
-
 ENTRYPOINT ["/usr/src/app/gobinary"]
