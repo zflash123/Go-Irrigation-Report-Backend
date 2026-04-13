@@ -36,9 +36,12 @@ func Db_connection() {
 	Db, Err = gorm.Open(postgres.Open(dsn), &gorm.Config{
 		PrepareStmt: true,
 		SkipDefaultTransaction: true,
+		DefaultContextTimeout: 3000000,
 	})
 
 	if Err != nil {
-		panic("failed to connect database")
+		log.Println("failed to connect database")
+	} else {
+		log.Println("DB Connected")
 	}
 }
