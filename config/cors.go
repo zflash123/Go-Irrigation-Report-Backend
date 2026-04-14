@@ -10,5 +10,5 @@ var CorsObject = cors.New(cors.Options{
 	AllowedHeaders: []string{"*"},
 	AllowedMethods: []string{"GET", "POST", "PUT"},
 	AllowCredentials: true,
-	Debug: false,
+	Debug: true,
 })
