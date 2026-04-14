@@ -33,7 +33,7 @@ func GlobalDosPreventer(next http.Handler) http.Handler {
 			http.Error(w, "Error: DoS Prevented", 413)
 			return
 		} else if err != nil{
-			http.Error(w, "Error lainnya ketika preventing DoS", 500)
+			http.Error(w, "Other Error when Preventing DoS", 500)
 			log.Println("Other Error when Preventing DoS: ", err)
 			return 
 		}
