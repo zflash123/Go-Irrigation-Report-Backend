@@ -6,8 +6,8 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postirr0987
-      - POSTGRES_DB=go-irrigation-report
+      - POSTGRES_PASSWORD=SECRET_PASSWORD
+      - POSTGRES_DB=YOUR_DB_NAME
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
