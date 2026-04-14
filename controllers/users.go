@@ -136,7 +136,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func CheckValidJwt(w http.ResponseWriter, r *http.Request) {
-	return
 }
 
 func HealthCheck(w http.ResponseWriter, r *http.Request) {
