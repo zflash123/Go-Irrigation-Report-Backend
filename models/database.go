@@ -36,7 +36,7 @@ func Db_connection() {
 	Db, Err = gorm.Open(postgres.Open(dsn), &gorm.Config{
 		PrepareStmt: true,
 		SkipDefaultTransaction: true,
-		DefaultContextTimeout: 3000000,
+		DefaultContextTimeout: 3000000000,
 	})
 
 	if Err != nil {
