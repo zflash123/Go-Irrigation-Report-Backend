@@ -40,14 +40,12 @@ func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
 	models.Db.Raw(`SELECT
             id,
             name,
-            geojson,
-            public.ST_Distance(geom, public.geography(public.ST_SetSRID(public.ST_MakePoint(?, ?), 4326))) AS distance
+            geojson
         FROM
             map.irrigations_segment
         WHERE
             public.ST_Distance(geom, public.geography(public.ST_SetSRID(public.ST_MakePoint(?, ?), 4326)))<=100
-        ORDER BY
-            distance;`, longitude, latitude, longitude, latitude).Scan(&closeSegments)
+		;`, longitude, latitude).Scan(&closeSegments)
 
 	if closeSegments == nil {
 		w.WriteHeader(http.StatusNotFound)
