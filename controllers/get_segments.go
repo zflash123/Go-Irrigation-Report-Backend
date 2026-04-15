@@ -11,9 +11,11 @@ import (
 )
 
 type CloseSegments struct {
-	ID      uuid.UUID `json:"id"`
-	Name    string    `json:"name"`
-	Geojson string    `json:"geojson"`
+	ID      			uuid.UUID `json:"id"`
+	Name    			string    `json:"name"`
+	Geojson 			string    `json:"geojson"`
+	IsReportedByYourId 	bool	  `json:"is_reported_by_your_id"`
+	ReportStatus	 	string    `json:"report_status"`
 }
 
 type Segment struct {
@@ -29,6 +31,7 @@ type Segment struct {
 func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
 	latitude := r.URL.Query().Get("lat")
 	longitude := r.URL.Query().Get("long")
+	user_id := fmt.Sprintf("%v", r.Context().Value("user_id"))
 
 	if latitude == "" || longitude == "" {
 		var res Response
@@ -38,14 +41,19 @@ func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
 	}
 	var closeSegments []CloseSegments
 	models.Db.Raw(`SELECT
-            id,
-            name,
-            geojson
+            map.irrigations_segment.id,
+            map.irrigations_segment.name,
+            map.irrigations_segment.geojson,
+			(CAST(report.report_list.user_id as text) = ?) AS is_reported_by_your_id,
+			report.status.name AS report_status
         FROM
             map.irrigations_segment
+		LEFT JOIN report.report_segment ON report.report_segment.segment_id = map.irrigations_segment.id
+		LEFT JOIN report.report_list ON report.report_list.id = report.report_segment.report_id
+		LEFT JOIN report.status ON report.status.id = report.report_list.status_id
         WHERE
             public.ST_Distance(geom, public.geography(public.ST_SetSRID(public.ST_MakePoint(?, ?), 4326)))<=100
-		;`, longitude, latitude).Scan(&closeSegments)
+		;`, user_id, longitude, latitude).Scan(&closeSegments)
 
 	if closeSegments == nil {
 		w.WriteHeader(http.StatusNotFound)
