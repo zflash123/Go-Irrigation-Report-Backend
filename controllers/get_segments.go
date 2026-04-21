@@ -52,7 +52,8 @@ func GetCloseSegments(w http.ResponseWriter, r *http.Request) {
 		LEFT JOIN report.report_list ON report.report_list.id = report.report_segment.report_id
 		LEFT JOIN report.status ON report.status.id = report.report_list.status_id
         WHERE
-            public.ST_Distance(geom, public.geography(public.ST_SetSRID(public.ST_MakePoint(?, ?), 4326)))<=100
+            public.ST_DWithin(map.irrigations_segment.center_point, public.ST_SetSRID(public.ST_MakePoint(?, ?), 4326),100,false)
+		LIMIT 120
 		;`, user_id, longitude, latitude).Scan(&closeSegments)
 
 	if closeSegments == nil {
@@ -106,9 +107,11 @@ func GetSegmentsByUserId(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Printf("%v", err)
 		}
+		return
 	}
 	err := json.NewEncoder(w).Encode(segments)
 	if err != nil {
 		fmt.Printf("%v", err)
 	}
+	return
 }
